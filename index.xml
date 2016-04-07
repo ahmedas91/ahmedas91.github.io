@@ -1,30 +1,29 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Ahmad Mohammad</title>
-    <link>ahmedas91.github.io/</link>
-    <description>Recent content on Ahmad Mohammad</description>
+    <title></title>
+    <link>/</link>
+    <description>Recent content on </description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
     <lastBuildDate>Tue, 05 Apr 2016 20:55:56 +0300</lastBuildDate>
-    <atom:link href="ahmedas91.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>resume</title>
-      <link>/ahmedas91.github.io/about/</link>
+      <link>/about/</link>
       <pubDate>Tue, 05 Apr 2016 20:55:56 +0300</pubDate>
       
-      <guid>/ahmedas91.github.io/about/</guid>
+      <guid>/about/</guid>
       <description>&lt;p&gt;khara zagga bola&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>resume</title>
-      <link>/ahmedas91.github.io/blog/2016/04/05/resume/</link>
+      <link>/post/resume/</link>
       <pubDate>Tue, 05 Apr 2016 20:55:56 +0300</pubDate>
       
-      <guid>/ahmedas91.github.io/blog/2016/04/05/resume/</guid>
+      <guid>/post/resume/</guid>
       <description>
 
 &lt;div&gt;$$
@@ -394,10 +393,10 @@ cond(no)-&amp;gt;op
     
     <item>
       <title>tototot</title>
-      <link>/ahmedas91.github.io/blog/2016/04/05/tototot/</link>
+      <link>/post/test/</link>
       <pubDate>Tue, 05 Apr 2016 20:55:56 +0300</pubDate>
       
-      <guid>/ahmedas91.github.io/blog/2016/04/05/tototot/</guid>
+      <guid>/post/test/</guid>
       <description>
 
 &lt;h1 id=&#34;heading:b128b7694e4de962e0088bcb1bcb254f&#34;&gt;Heading&lt;/h1&gt;

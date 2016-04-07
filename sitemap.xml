@@ -2,23 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>/ahmedas91.github.io/</loc>
+    <loc>/</loc>
     <lastmod>2016-04-05T20:55:56+03:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/ahmedas91.github.io/about/</loc>
+    <loc>/about/</loc>
     <lastmod>2016-04-05T20:55:56+03:00</lastmod>
   </url>
   
   <url>
-    <loc>/ahmedas91.github.io/blog/2016/04/05/resume/</loc>
+    <loc>/post/resume/</loc>
     <lastmod>2016-04-05T20:55:56+03:00</lastmod>
   </url>
   
   <url>
-    <loc>/ahmedas91.github.io/blog/2016/04/05/tototot/</loc>
+    <loc>/post/test/</loc>
     <lastmod>2016-04-05T20:55:56+03:00</lastmod>
   </url>
   
