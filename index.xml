@@ -27,6 +27,8 @@
       <guid>http://ahmedas91.github.io/blog/2016/04/05/resume/</guid>
       <description>
 
+&lt;iframe width=&#34;900&#34; height=&#34;800&#34; frameborder=&#34;0&#34; scrolling=&#34;no&#34; src=&#34;https://plot.ly/~ahmedas91/0.embed&#34;&gt;&lt;/iframe&gt;
+
 &lt;div&gt;$$
 J(w)=\frac { 1 }{ m } \sum _{ i=1 }^{ m }\left[ -{ y }^{ (i) }log\left( \frac { 1 }{ 1+{ e }^{ -({ w }^{ T }{ x }^{ (i) }) } }  \right) -(1-{ y }^{ (i) })log\left( 1-\frac { 1 }{ 1+{ e }^{ -({ w }^{ T }{ x }^{ (i) }) } }  \right)  \right] + \frac{ \lambda  }{ 2m } \sum _{ j=1 }^{ n }{{ w }_{ j }^{ 2 }}$$&lt;/div&gt;
 
