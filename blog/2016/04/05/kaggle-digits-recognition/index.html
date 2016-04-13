@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>Kaggle Digits Recognition &middot; Ahmad Mohammad</title>
+
+  
+  <link rel="stylesheet" href="http://ahmedas91.github.io/css/poole.css">
+  <link rel="stylesheet" href="http://ahmedas91.github.io/css/hyde.css">
+  <link rel="stylesheet" href="http://ahmedas91.github.io/css/poole-overrides.css">
+  <link rel="stylesheet" href="http://ahmedas91.github.io/css/hyde-overrides.css">
+  <link rel="stylesheet" href="http://ahmedas91.github.io/css/hyde-x.css">
+  <link rel="stylesheet" href="http://ahmedas91.github.io/css/highlight/github.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://ahmedas91.github.io/touch-icon-144-precomposed.png">
+  <link href="http://ahmedas91.github.io/favicon.png" rel="icon">
+
+  
+  
+  
+  
+
+  <meta name="description" content="hopefully this works out but still every thing needs some work">
+  <meta name="keywords" content="your,default,page,keywords">
+  
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'Your Google Analytics tracking code', 'auto');
+    ga('send', 'pageview');
+  </script>
+  
+</head>
+
+<body class="theme-base-0d">
+<div class="sidebar">
+  <div class="container">
+    <div class="sidebar-about">
+      
+        <img src="https://www.gravatar.com/avatar/MD5%20hash%20of%20your%20Gravatar%20email%20address?s=200"
+             alt="gravatar" title="Ahmad Mohammad">
+      
+      <h1>Ahmad Mohammad</h1>
+      <p class="lead">Your favourite quote or soundbite.</p>
+    </div>
+
+    <ul class="sidebar-nav">
+      <li class="sidebar-nav-item"><a href="http://ahmedas91.github.io/">Home</a></li>
+      
+      <li class="sidebar-nav-item"><a href="http://ahmedas91.github.io/about/">resume</a></li>
+      
+      <li class="sidebar-nav-item"><a href="http://ahmedas91.github.io/blog/2016/04/05/tototot/">tototot</a></li>
+      
+    </ul>
+
+    <ul class="sidebar-nav">
+      <li class="sidebar-nav-item">
+      <a href="https://github.com/ahmedas91"><i class="fa fa-github-square fa-3x"></i></a>
+      
+      
+      <a href="https://kw.linkedin.com/in/ahmadmoham"><i class="fa fa-linkedin-square fa-3x"></i></a>
+      
+      
+      
+      
+      
+      </li>
+    </ul>
+
+
+
+    <p>Copyright &copy; 2016 <a href="http://ahmedas91.github.io/license/">License</a><br/>
+       Powered by <a href="http://gohugo.io">Hugo</a> and <a href="https://github.com/zyro/hyde-x">Hyde-X</a></p>
+  </div>
+</div>
+
+
+
+
+<div class="content container">
+  <div class="post">
+    <h1 class="post-title">Kaggle Digits Recognition</h1>
+    <span class="post-date">Apr 5, 2016
+    
+    <br/>
+    
+    </span>
+    
+
+<p>Dr. Anderw Ng&rsquo;s <a href="https://www.coursera.org/learn/machine-learning">machine leanring class</a> excercises provide detailed walkthrough for solving a simple digit recognition problem, A LOT beter then than my humble attempt below on kaggle&rsquo;s <a href="https://www.kaggle.com/c/digit-recognizer">Digit Recognizer</a> competition. Here I&rsquo;m just applying what i&rsquo;ve learned on a Kaggle competition using python&rsquo;s <code>sklearn</code> library.</p>
+
+<h2 id="libraries:198dcce0e3a86be44ee153bd38f33f22">Libraries</h2>
+
+<ul>
+<li><a href="http://www.numpy.org/">Numpy</a></li>
+<li><a href="matplotlib.org/">Matplotlib</a></li>
+<li><a href="scikit-learn.org/">sklearn</a></li>
+<li><a href="http://pandas.pydata.org/">pandas</a></li>
+</ul>
+
+<h2 id="exploring-the-data:198dcce0e3a86be44ee153bd38f33f22">Exploring the data</h2>
+
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+%matplotlib inline
+
+X =  np.genfromtxt('train.csv',dtype='int_', 
+                   delimiter=',', skip_header=1)
+x_test =  np.genfromtxt('test.csv',dtype='int_', 
+                        delimiter=',', skip_header=1)
+x_train = X[:,1:]
+y_train = X[:,0]
+</code></pre>
+
+<p>Each row in the <code>x_train</code> and <code>x_test</code> data is a 28x28 pixels image with a total of 784 pixels. Therefore, we will write a simple function takes randomly selected rows, reshapes them into 28x28 matrices and desplay them using <code>matplotlib.image.mpimg</code>.</p>
+
+<pre><code class="language-python">def display(n):    
+    for i in range(1,(n**2)+1):
+        plt.subplot(n,n,i)
+        plt.axis('off')
+        pic = np.reshape(x_train[np.random.randint(1,42000)],(28,28))
+        imgplot = plt.imshow(pic, cmap='Greys')
+display(5)
+</code></pre>
+
+
+<figure >
+    
+        <img src="/images/digits.png" />
+    
+    
+</figure>
+
+
+<h2 id="training-the-data:198dcce0e3a86be44ee153bd38f33f22">Training the data</h2>
+
+<p>We&rsquo;re going to use a cross validated logistic linear regression function with an l2 regulaization using sklearn&rsquo;s <code>linear_model.LogisticRegressionCV</code>. Since we have 10 classes 0 to 9, we&rsquo;ll also need the <code>multiclass.OneVsRestClassifier</code>.</p>
+
+<pre><code class="language-python">from sklearn.multiclass import OneVsRestClassifier
+from sklearn.linear_model import LogisticRegressionCV
+classifier = OneVsRestClassifier(LogisticRegressionCV(penalty='l2', 
+                                                      n_jobs = -1)) 
+classifier.fit(x_train, y_train)
+</code></pre>
+
+<p>Now let&rsquo;s check the accuracy of the training data.</p>
+
+<pre><code class="language-python"># predict y using the train set
+y_predicted = classifier.predict(x_train)             
+accuracy = np.mean((y_predicted == y_train) * 100)
+print &quot;Training set accuracy: {0:.4f}%&quot;.format(accuracy)
+</code></pre>
+
+<p><code>Training set accuracy: 93.1619%</code></p>
+
+<h2 id="submitting-the-data:198dcce0e3a86be44ee153bd38f33f22">Submitting the data</h2>
+
+<p>We&rsquo;re gonna do the same thing with but with the x_test data and do some data cleaning for submission.</p>
+
+<pre><code class="language-python"># predict y using the test set
+y_test = classifier.predict(x_test) 
+# kaggles requires the submission to include an index column         
+index = np.arange(1,len(x_test)+1, dtype=int)  
+# merging the y_test and index columns        
+y_test = np.column_stack((index,y_test))
+# convert to pandas dataframe
+y_test = pd.DataFrame(y_test)
+# headers required for the submission                          
+y_test.columns = ['ImageId','Label']    
+# write the data to csv file in the directory               
+y_test.to_csv('y_test_kaggle_digits.csv', index=False) 
+</code></pre>
+
+<p>After submitting the csv file we get an accuracy of 0.91100 which is not that bad (unless you check the rank and realize we&rsquo;re at the buttom!!).</p>
+
+  </div>
+  
+</div>
+
+
+
+
+<script src="http://ahmedas91.github.io/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>
+
+
+<script type="text/javascript"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[','\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+

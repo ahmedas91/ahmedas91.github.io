@@ -753,5 +753,101 @@ cond(no)-&amp;gt;op
 </description>
     </item>
     
+    <item>
+      <title>Kaggle Digits Recognition</title>
+      <link>http://ahmedas91.github.io/blog/2016/04/05/kaggle-digits-recognition/</link>
+      <pubDate>Tue, 05 Apr 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://ahmedas91.github.io/blog/2016/04/05/kaggle-digits-recognition/</guid>
+      <description>
+
+&lt;p&gt;Dr. Anderw Ng&amp;rsquo;s &lt;a href=&#34;https://www.coursera.org/learn/machine-learning&#34;&gt;machine leanring class&lt;/a&gt; excercises provide detailed walkthrough for solving a simple digit recognition problem, A LOT beter then than my humble attempt below on kaggle&amp;rsquo;s &lt;a href=&#34;https://www.kaggle.com/c/digit-recognizer&#34;&gt;Digit Recognizer&lt;/a&gt; competition. Here I&amp;rsquo;m just applying what i&amp;rsquo;ve learned on a Kaggle competition using python&amp;rsquo;s &lt;code&gt;sklearn&lt;/code&gt; library.&lt;/p&gt;
+
+&lt;h2 id=&#34;libraries:198dcce0e3a86be44ee153bd38f33f22&#34;&gt;Libraries&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.numpy.org/&#34;&gt;Numpy&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;matplotlib.org/&#34;&gt;Matplotlib&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;scikit-learn.org/&#34;&gt;sklearn&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://pandas.pydata.org/&#34;&gt;pandas&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;exploring-the-data:198dcce0e3a86be44ee153bd38f33f22&#34;&gt;Exploring the data&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import numpy as np
+import matplotlib.pyplot as plt
+%matplotlib inline
+
+X =  np.genfromtxt(&#39;train.csv&#39;,dtype=&#39;int_&#39;, 
+                   delimiter=&#39;,&#39;, skip_header=1)
+x_test =  np.genfromtxt(&#39;test.csv&#39;,dtype=&#39;int_&#39;, 
+                        delimiter=&#39;,&#39;, skip_header=1)
+x_train = X[:,1:]
+y_train = X[:,0]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Each row in the &lt;code&gt;x_train&lt;/code&gt; and &lt;code&gt;x_test&lt;/code&gt; data is a 28x28 pixels image with a total of 784 pixels. Therefore, we will write a simple function takes randomly selected rows, reshapes them into 28x28 matrices and desplay them using &lt;code&gt;matplotlib.image.mpimg&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def display(n):    
+    for i in range(1,(n**2)+1):
+        plt.subplot(n,n,i)
+        plt.axis(&#39;off&#39;)
+        pic = np.reshape(x_train[np.random.randint(1,42000)],(28,28))
+        imgplot = plt.imshow(pic, cmap=&#39;Greys&#39;)
+display(5)
+&lt;/code&gt;&lt;/pre&gt;
+
+
+&lt;figure &gt;
+    
+        &lt;img src=&#34;http://ahmedas91.github.io/images/digits.png&#34; /&gt;
+    
+    
+&lt;/figure&gt;
+
+
+&lt;h2 id=&#34;training-the-data:198dcce0e3a86be44ee153bd38f33f22&#34;&gt;Training the data&lt;/h2&gt;
+
+&lt;p&gt;We&amp;rsquo;re going to use a cross validated logistic linear regression function with an l2 regulaization using sklearn&amp;rsquo;s &lt;code&gt;linear_model.LogisticRegressionCV&lt;/code&gt;. Since we have 10 classes 0 to 9, we&amp;rsquo;ll also need the &lt;code&gt;multiclass.OneVsRestClassifier&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;from sklearn.multiclass import OneVsRestClassifier
+from sklearn.linear_model import LogisticRegressionCV
+classifier = OneVsRestClassifier(LogisticRegressionCV(penalty=&#39;l2&#39;, 
+                                                      n_jobs = -1)) 
+classifier.fit(x_train, y_train)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now let&amp;rsquo;s check the accuracy of the training data.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# predict y using the train set
+y_predicted = classifier.predict(x_train)             
+accuracy = np.mean((y_predicted == y_train) * 100)
+print &amp;quot;Training set accuracy: {0:.4f}%&amp;quot;.format(accuracy)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;Training set accuracy: 93.1619%&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;submitting-the-data:198dcce0e3a86be44ee153bd38f33f22&#34;&gt;Submitting the data&lt;/h2&gt;
+
+&lt;p&gt;We&amp;rsquo;re gonna do the same thing with but with the x_test data and do some data cleaning for submission.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# predict y using the test set
+y_test = classifier.predict(x_test) 
+# kaggles requires the submission to include an index column         
+index = np.arange(1,len(x_test)+1, dtype=int)  
+# merging the y_test and index columns        
+y_test = np.column_stack((index,y_test))
+# convert to pandas dataframe
+y_test = pd.DataFrame(y_test)
+# headers required for the submission                          
+y_test.columns = [&#39;ImageId&#39;,&#39;Label&#39;]    
+# write the data to csv file in the directory               
+y_test.to_csv(&#39;y_test_kaggle_digits.csv&#39;, index=False) 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;After submitting the csv file we get an accuracy of 0.91100 which is not that bad (unless you check the rank and realize we&amp;rsquo;re at the buttom!!).&lt;/p&gt;
+</description>
+    </item>
+    
   </channel>
 </rss>
