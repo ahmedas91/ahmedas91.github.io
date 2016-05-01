@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
-  <title>Kaggle Digits Recognition &middot; Ahmad Mohammad</title>
+  <title>Hunting Down Growth Stocks &middot; Ahmad Mohammad</title>
 
   
   <link rel="stylesheet" href="http://ahmedas91.github.io/css/poole.css">
@@ -29,7 +29,7 @@
   
   
 
-  <meta name="description" content="Solving a Kaggle&#39;s Digit Recognition competition.">
+  <meta name="description" content="Your default page description">
   <meta name="keywords" content="your,default,page,keywords">
   
   <script>
@@ -89,89 +89,13 @@
 
 <div class="content container">
   <div class="post">
-    <h1 class="post-title">Kaggle Digits Recognition</h1>
+    <h1 class="post-title">Hunting Down Growth Stocks</h1>
     <span class="post-date">Apr 5, 2016
     
     <br/>
     
     </span>
-    
-
-<p>In this post, I&rsquo;ll solve  Kaggle&rsquo;s <a href="https://www.kaggle.com/c/digit-recognizer">Digit Recognizer</a> competition using python&rsquo;s machine learning library <code>sklearn</code>. However, if you want to check out an implementation from scratch, I have uploaded one on this repo on github.</p>
-
-<h2 id="exploring-the-data:d0e6025616b3fd7d9f31e36bec92e790">Exploring the data</h2>
-
-<pre><code class="language-python">import numpy as np
-
-X =  np.genfromtxt('train.csv',dtype='int_', 
-                   delimiter=',', skip_header=1)
-x_test =  np.genfromtxt('test.csv',dtype='int_', 
-                        delimiter=',', skip_header=1)
-x_train = X[:,1:]
-y_train = X[:,0]
-</code></pre>
-
-<p>Each row in the <code>x_train</code> and <code>x_test</code> data is a 28x28 pixels image with a total of 784 pixels. Therefore, we will write a simple function takes randomly selected rows, reshapes them into 28x28 matrices and display them using <code>matplotlib.image.mpimg</code>.</p>
-
-<pre><code class="language-python">import matplotlib.pyplot as plt
-%matplotlib inline
-
-def display(n):    
-    for i in range(1,(n**2)+1):
-        plt.subplot(n,n,i)
-        plt.axis('off')
-        pic = np.reshape(x_train[np.random.randint(1,42000)],(28,28))
-        imgplot = plt.imshow(pic, cmap='Greys')
-display(5)
-</code></pre>
-
-
-<figure >
-    
-        <img src="/images/digits.png" />
-    
-    
-</figure>
-
-
-<h2 id="training-the-data:d0e6025616b3fd7d9f31e36bec92e790">Training the data</h2>
-
-<p>We&rsquo;re going to use a cross validated logistic linear regression function with an l2 regularization using sklearn&rsquo;s <code>linear_model.LogisticRegressionCV</code>. Since we have 10 classes 0 to 9, we&rsquo;ll also need the <code>multiclass.OneVsRestClassifier</code>.</p>
-
-<pre><code class="language-python">from sklearn.multiclass import OneVsRestClassifier
-from sklearn.linear_model import LogisticRegressionCV
-
-classifier = OneVsRestClassifier(LogisticRegressionCV(penalty='l2', n_jobs = -1)) 
-classifier.fit(x_train, y_train)
-</code></pre>
-
-<p>Now let&rsquo;s check the accuracy of the training data.</p>
-
-<pre><code class="language-python"># predict y using the train set
-y_predicted = classifier.predict(x_train)             
-accuracy = np.mean((y_predicted == y_train) * 100)
-print &quot;Training set accuracy: {0:.4f}%&quot;.format(accuracy)
-</code></pre>
-
-<h2 id="submitting-the-data:d0e6025616b3fd7d9f31e36bec92e790">Submitting the data</h2>
-
-<p>We&rsquo;re gonna do the same thing with but with the x_test data and do some data cleaning for submission.</p>
-
-<pre><code class="language-python"># predict y using the test set
-y_test = classifier.predict(x_test) 
-# kaggles requires the submission to include an index column         
-index = np.arange(1,len(x_test)+1, dtype=int)  
-# merging the y_test and index columns        
-y_test = np.column_stack((index,y_test))
-# convert to pandas dataframe
-y_test = pd.DataFrame(y_test)
-# headers required for the submission                          
-y_test.columns = ['ImageId','Label']    
-# write the data to csv file in the directory               
-y_test.to_csv('y_test_kaggle_digits.csv', index=False) 
-</code></pre>
-
-<p>After submitting the csv file we get an accuracy of 0.91100 which is not that bad (unless you check the rank and realize we&rsquo;re at the buttom!!).</p>
+    <p><a href="https://nbviewer.jupyter.org/gist/ahmedas91/b9d894638488aa5d65fcc8c04673d2f9">A naive way to hunt down growth stocks. (Ipythone Notebook)</a></p>
 
   </div>
   
