@@ -37,7 +37,7 @@
       <guid>http://ahmedas91.github.io/blog/2016/04/05/kaggle-digits-recognition/</guid>
       <description>
 
-&lt;p&gt;In this post, I&amp;rsquo;ll solve  Kaggle&amp;rsquo;s &lt;a href=&#34;https://www.kaggle.com/c/digit-recognizer&#34;&gt;Digit Recognizer&lt;/a&gt; competition using python&amp;rsquo;s machine learning library &lt;code&gt;sklearn&lt;/code&gt;. However, if you want to check out an implementation from scratch, I have uploaded one on this repo on github.&lt;/p&gt;
+&lt;p&gt;On my test post, we&amp;rsquo;ll solve  Kaggle&amp;rsquo;s &lt;a href=&#34;https://www.kaggle.com/c/digit-recognizer&#34;&gt;Digit Recognizer&lt;/a&gt; competition using python&amp;rsquo;s machine learning library &lt;code&gt;sklearn&lt;/code&gt;. It a really simple problem and used as a starting point (along with the &lt;a href=&#34;https://www.kaggle.com/c/titanic&#34;&gt;Titanic&lt;/a&gt; one) Kaggle competitions. If you want to check out an implementation from scratch, I have uploaded one on this repo on github.&lt;/p&gt;
 
 &lt;h2 id=&#34;exploring-the-data:d0e6025616b3fd7d9f31e36bec92e790&#34;&gt;Exploring the data&lt;/h2&gt;
 
@@ -111,7 +111,7 @@ y_test.columns = [&#39;ImageId&#39;,&#39;Label&#39;]
 y_test.to_csv(&#39;y_test_kaggle_digits.csv&#39;, index=False) 
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;After submitting the csv file we get an accuracy of 0.91100 which is not that bad (unless you check the rank and realize we&amp;rsquo;re at the buttom!!).&lt;/p&gt;
+&lt;p&gt;After submitting the csv file we get an accuracy of 0.91100 which is not that bad (unless you check the rank and realize we&amp;rsquo;re at the bottom!!).&lt;/p&gt;
 </description>
     </item>
     
