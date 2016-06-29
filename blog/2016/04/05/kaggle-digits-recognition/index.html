@@ -97,7 +97,7 @@
     </span>
     
 
-<p>On my test post, we&rsquo;ll solve  Kaggle&rsquo;s <a href="https://www.kaggle.com/c/digit-recognizer">Digit Recognizer</a> competition using python&rsquo;s machine learning library <code>sklearn</code>. It a really simple problem and used as a starting point (along with the <a href="https://www.kaggle.com/c/titanic">Titanic</a> one) Kaggle competitions. If you want to check out an implementation from scratch, I have uploaded one on this repo on github.</p>
+<p>On my test post, we&rsquo;ll solve  Kaggle&rsquo;s <a href="https://www.kaggle.com/c/digit-recognizer">Digit Recognizer</a> competition using python&rsquo;s machine learning library <code>sklearn</code>. It a really simple problem and used as a starting point (along with the <a href="https://www.kaggle.com/c/titanic">Titanic</a> one) Kaggle competitions.</p>
 
 <h2 id="exploring-the-data:d0e6025616b3fd7d9f31e36bec92e790">Exploring the data</h2>
 
@@ -136,42 +136,95 @@ display(5)
 
 <h2 id="training-the-data:d0e6025616b3fd7d9f31e36bec92e790">Training the data</h2>
 
-<p>We&rsquo;re going to use a cross validated logistic linear regression function with an l2 regularization using sklearn&rsquo;s <code>linear_model.LogisticRegressionCV</code>. Since we have 10 classes 0 to 9, we&rsquo;ll also need the <code>multiclass.OneVsRestClassifier</code>.</p>
+<h4 id="logistic-regression:d0e6025616b3fd7d9f31e36bec92e790">Logistic regression</h4>
 
-<pre><code class="language-python">from sklearn.multiclass import OneVsRestClassifier
-from sklearn.linear_model import LogisticRegressionCV
+<pre><code class="language-python">from sklearn.linear_model import LogisticRegressionCV
+model_log = LogisticRegressionCV(multi_class='multinomial') 
+model_log.fit(x_train, y_train)
+</code></pre>
 
-classifier = OneVsRestClassifier(LogisticRegressionCV(penalty='l2', n_jobs = -1)) 
-classifier.fit(x_train, y_train)
+<h4 id="random-forests:d0e6025616b3fd7d9f31e36bec92e790">Random forests</h4>
+
+<pre><code class="language-python">from sklearn.ensemble import RandomForestClassifier
+model_rf = RandomForestClassifier(1000)
+model_rf = ran.fit(x_train,y_train)
+</code></pre>
+
+<h4 id="neural-networks:d0e6025616b3fd7d9f31e36bec92e790">Neural Networks</h4>
+
+<pre><code class="language-python">import import tensorflow.contrib.learn as skflow
+#Tensorflow library only accept numbers with type float
+x_train = x_train.astype('float32')
+y_train = y_train.astype('float32')
+x_test = x_test.astype('float32')
+model_nn = skflow.TensorFlowDNNClassifier(hidden_units=[100,50], n_classes=10, steps=100000)
+model_nn.fit(x_train, y_train)
 </code></pre>
 
 <p>Now let&rsquo;s check the accuracy of the training data.</p>
 
-<pre><code class="language-python"># predict y using the train set
-y_predicted = classifier.predict(x_train)             
-accuracy = np.mean((y_predicted == y_train) * 100)
-print &quot;Training set accuracy: {0:.4f}%&quot;.format(accuracy)
+<pre><code class="language-python">print 'Logistic regression', model_log.score(x_train, y_train)
+print 'Random forests', model_rf.score(x_train, y_train)
+print 'Neural networks', model_nn.score(x_train, y_train)
 </code></pre>
 
-<h2 id="submitting-the-data:d0e6025616b3fd7d9f31e36bec92e790">Submitting the data</h2>
+<p>prints:
+<code>Logistic regression 0.941357142857</code>
+<code>Random forests 1.0</code>
+<code>Neural networks 0.99328571428571433</code></p>
+
+<h1 id="submitting-the-data:d0e6025616b3fd7d9f31e36bec92e790">Submitting the data</h1>
 
 <p>We&rsquo;re gonna do the same thing with but with the x_test data and do some data cleaning for submission.</p>
 
-<pre><code class="language-python"># predict y using the test set
-y_test = classifier.predict(x_test) 
-# kaggles requires the submission to include an index column         
-index = np.arange(1,len(x_test)+1, dtype=int)  
-# merging the y_test and index columns        
-y_test = np.column_stack((index,y_test))
-# convert to pandas dataframe
-y_test = pd.DataFrame(y_test)
-# headers required for the submission                          
-y_test.columns = ['ImageId','Label']    
-# write the data to csv file in the directory               
-y_test.to_csv('y_test_kaggle_digits.csv', index=False) 
+<pre><code class="language-python">def submit(model,x_test, name):
+    # predict y using the test set
+    y_test = model.predict(x_test) 
+    # kaggles requires the submission to include an index column         
+    index = np.arange(1,len(x_test)+1, dtype=int)  
+    # merging the y_test and index columns        
+    y_test = np.column_stack((index,y_test))
+    # convert to pandas dataframe
+    y_test = pd.DataFrame(y_test)
+    # headers required for the submission                          
+    y_test.columns = ['ImageId','Label']    
+    # write the data to csv file in the directory    
+    y_test = y_test.astype('int')
+    y_test.to_csv(&quot;&quot;.join([name,'.csv']), index=False) 
 </code></pre>
 
-<p>After submitting the csv file we get an accuracy of 0.91100 which is not that bad (unless you check the rank and realize we&rsquo;re at the bottom!!).</p>
+<pre><code class="language-python">submit(model_log,x_test,'model_log')
+submit(model_rf,x_test,'model_rf')
+submit(model_nn,x_test,'model_nn')
+</code></pre>
+
+<h3 id="results:d0e6025616b3fd7d9f31e36bec92e790">Results</h3>
+
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Test Accuracy Score</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Logistic Regression</td>
+<td>0.91771</td>
+</tr>
+
+<tr>
+<td>Random Forests</td>
+<td>0.96800</td>
+</tr>
+
+<tr>
+<td>Neural Networks</td>
+<td>0.94900</td>
+</tr>
+</tbody>
+</table>
 
   </div>
   
