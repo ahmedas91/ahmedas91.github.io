@@ -10,11 +10,11 @@
     <atom:link href="http://ahmedas91.github.io/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
-      <title>Classifying Students&#39; Success Rate</title>
-      <link>http://ahmedas91.github.io/blog/2016/04/09/classifying-students-success-rate/</link>
+      <title>Using Logistic Regression, Gaussian Naive Bayes to Classify Students&#39; Success Rate</title>
+      <link>http://ahmedas91.github.io/blog/2016/04/09/using-logistic-regression-gaussian-naive-bayes-to-classify-students-success-rate/</link>
       <pubDate>Sat, 09 Apr 2016 20:55:56 +0300</pubDate>
       
-      <guid>http://ahmedas91.github.io/blog/2016/04/09/classifying-students-success-rate/</guid>
+      <guid>http://ahmedas91.github.io/blog/2016/04/09/using-logistic-regression-gaussian-naive-bayes-to-classify-students-success-rate/</guid>
       <description>&lt;iframe src=&#34;http://nbviewer.jupyter.org/gist/ahmedas91/0cc0b278292d1494bbe9e41d95560682&#34; width=&#34;1000&#34; height=&#34;9000&#34;&gt;&lt;/iframe&gt; 
 </description>
     </item>
@@ -33,16 +33,6 @@
     
 &lt;/figure&gt;
 
-</description>
-    </item>
-    
-    <item>
-      <title>Boston Housing Prices</title>
-      <link>http://ahmedas91.github.io/blog/2016/04/05/boston-housing-prices/</link>
-      <pubDate>Tue, 05 Apr 2016 20:55:56 +0300</pubDate>
-      
-      <guid>http://ahmedas91.github.io/blog/2016/04/05/boston-housing-prices/</guid>
-      <description>&lt;iframe src=&#34;https://nbviewer.jupyter.org/gist/ahmedas91/f93dc91562c06549f5890924d50d7c61&#34; width=&#34;1000&#34; height=&#34;6800&#34;&gt;&lt;/iframe&gt; 
 </description>
     </item>
     
@@ -167,6 +157,16 @@ iplot({
 &lt;iframe width=&#34;900&#34; height=&#34;800&#34; frameborder=&#34;0&#34; scrolling=&#34;no&#34; src=&#34;https://plot.ly/~ahmedas91/4.embed&#34;&gt;&lt;/iframe&gt;
 
 &lt;p&gt;Well, we&amp;rsquo;re still beating the market by about 30%. So can we really just let the experts do it for us? Well maybe use their lists as preliminary screener only.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Kaggle Animal Shelter Competition</title>
+      <link>http://ahmedas91.github.io/blog/2016/04/05/kaggle-animal-shelter-competition/</link>
+      <pubDate>Tue, 05 Apr 2016 20:55:56 +0300</pubDate>
+      
+      <guid>http://ahmedas91.github.io/blog/2016/04/05/kaggle-animal-shelter-competition/</guid>
+      <description>&lt;iframe src=&#34;http://nbviewer.jupyter.org/gist/ahmedas91/5699f914a158bf23402d8f7cd53b3571&#34; width=&#34;1000&#34; height=&#34;6800&#34;&gt;&lt;/iframe&gt; 
 </description>
     </item>
     
@@ -310,12 +310,12 @@ submit(model_nn,x_test,&#39;model_nn&#39;)
     </item>
     
     <item>
-      <title>Kaggles Animal Shelter Competition</title>
-      <link>http://ahmedas91.github.io/blog/2016/04/05/kaggles-animal-shelter-competition/</link>
+      <title>Model Evaluation and Validation Using Boston Housing prices</title>
+      <link>http://ahmedas91.github.io/blog/2016/04/05/model-evaluation-and-validation-using-boston-housing-prices/</link>
       <pubDate>Tue, 05 Apr 2016 20:55:56 +0300</pubDate>
       
-      <guid>http://ahmedas91.github.io/blog/2016/04/05/kaggles-animal-shelter-competition/</guid>
-      <description>&lt;iframe src=&#34;http://nbviewer.jupyter.org/gist/ahmedas91/5699f914a158bf23402d8f7cd53b3571&#34; width=&#34;1000&#34; height=&#34;6800&#34;&gt;&lt;/iframe&gt; 
+      <guid>http://ahmedas91.github.io/blog/2016/04/05/model-evaluation-and-validation-using-boston-housing-prices/</guid>
+      <description>&lt;iframe src=&#34;https://nbviewer.jupyter.org/gist/ahmedas91/f93dc91562c06549f5890924d50d7c61&#34; width=&#34;1000&#34; height=&#34;6800&#34;&gt;&lt;/iframe&gt; 
 </description>
     </item>
     
