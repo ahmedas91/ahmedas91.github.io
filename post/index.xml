@@ -6,8 +6,18 @@
     <description>Recent content in Posts on Ahmad Mohammad</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 09 Apr 2016 20:55:56 +0300</lastBuildDate>
+    <lastBuildDate>Sat, 25 Jun 2016 20:55:56 +0300</lastBuildDate>
     <atom:link href="http://ahmedas91.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Kaggle Animal Shelter Competition</title>
+      <link>http://ahmedas91.github.io/blog/2016/06/25/kaggle-animal-shelter-competition/</link>
+      <pubDate>Sat, 25 Jun 2016 20:55:56 +0300</pubDate>
+      
+      <guid>http://ahmedas91.github.io/blog/2016/06/25/kaggle-animal-shelter-competition/</guid>
+      <description>&lt;iframe src=&#34;http://nbviewer.jupyter.org/gist/ahmedas91/5699f914a158bf23402d8f7cd53b3571&#34; width=&#34;1000&#34; height=&#34;6800&#34;&gt;&lt;/iframe&gt; 
+</description>
+    </item>
     
     <item>
       <title>Using Logistic Regression, Gaussian Naive Bayes to Classify Students&#39; Success Rate</title>
@@ -20,11 +30,21 @@
     </item>
     
     <item>
-      <title>Hunting Down Growth Stocks</title>
-      <link>http://ahmedas91.github.io/blog/2016/04/05/hunting-down-growth-stocks/</link>
-      <pubDate>Tue, 05 Apr 2016 20:55:56 +0300</pubDate>
+      <title>Model Evaluation and Validation Using Boston Housing prices</title>
+      <link>http://ahmedas91.github.io/blog/2016/02/20/model-evaluation-and-validation-using-boston-housing-prices/</link>
+      <pubDate>Sat, 20 Feb 2016 20:55:56 +0300</pubDate>
       
-      <guid>http://ahmedas91.github.io/blog/2016/04/05/hunting-down-growth-stocks/</guid>
+      <guid>http://ahmedas91.github.io/blog/2016/02/20/model-evaluation-and-validation-using-boston-housing-prices/</guid>
+      <description>&lt;iframe src=&#34;https://nbviewer.jupyter.org/gist/ahmedas91/f93dc91562c06549f5890924d50d7c61&#34; width=&#34;1000&#34; height=&#34;6800&#34;&gt;&lt;/iframe&gt; 
+</description>
+    </item>
+    
+    <item>
+      <title>Hunting Down Growth Stocks</title>
+      <link>http://ahmedas91.github.io/blog/2016/02/15/hunting-down-growth-stocks/</link>
+      <pubDate>Mon, 15 Feb 2016 20:55:56 +0300</pubDate>
+      
+      <guid>http://ahmedas91.github.io/blog/2016/02/15/hunting-down-growth-stocks/</guid>
       <description>
 
 &lt;p&gt;Growth companies are those with huge potential returns and are often found in the technology sector. Here is the official definition from &lt;a href=&#34;http://www.investopedia.com/terms/g/growthcompany.asp&#34;&gt;investing.com&lt;/a&gt;:&lt;/p&gt;
@@ -144,21 +164,11 @@ iplot({
     </item>
     
     <item>
-      <title>Kaggle Animal Shelter Competition</title>
-      <link>http://ahmedas91.github.io/blog/2016/04/05/kaggle-animal-shelter-competition/</link>
-      <pubDate>Tue, 05 Apr 2016 20:55:56 +0300</pubDate>
-      
-      <guid>http://ahmedas91.github.io/blog/2016/04/05/kaggle-animal-shelter-competition/</guid>
-      <description>&lt;iframe src=&#34;http://nbviewer.jupyter.org/gist/ahmedas91/5699f914a158bf23402d8f7cd53b3571&#34; width=&#34;1000&#34; height=&#34;6800&#34;&gt;&lt;/iframe&gt; 
-</description>
-    </item>
-    
-    <item>
       <title>Kaggle Digits Recognition</title>
-      <link>http://ahmedas91.github.io/blog/2016/04/05/kaggle-digits-recognition/</link>
-      <pubDate>Tue, 05 Apr 2016 20:55:56 +0300</pubDate>
+      <link>http://ahmedas91.github.io/blog/2016/01/05/kaggle-digits-recognition/</link>
+      <pubDate>Tue, 05 Jan 2016 20:55:56 +0300</pubDate>
       
-      <guid>http://ahmedas91.github.io/blog/2016/04/05/kaggle-digits-recognition/</guid>
+      <guid>http://ahmedas91.github.io/blog/2016/01/05/kaggle-digits-recognition/</guid>
       <description>
 
 &lt;p&gt;On my test post, we&amp;rsquo;ll solve  Kaggle&amp;rsquo;s &lt;a href=&#34;https://www.kaggle.com/c/digit-recognizer&#34;&gt;Digit Recognizer&lt;/a&gt; competition using python&amp;rsquo;s machine learning library &lt;code&gt;sklearn&lt;/code&gt;. It a really simple problem and used as a starting point (along with the &lt;a href=&#34;https://www.kaggle.com/c/titanic&#34;&gt;Titanic&lt;/a&gt; one) Kaggle competitions.&lt;/p&gt;
@@ -289,16 +299,6 @@ submit(model_nn,x_test,&#39;model_nn&#39;)
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Model Evaluation and Validation Using Boston Housing prices</title>
-      <link>http://ahmedas91.github.io/blog/2016/04/05/model-evaluation-and-validation-using-boston-housing-prices/</link>
-      <pubDate>Tue, 05 Apr 2016 20:55:56 +0300</pubDate>
-      
-      <guid>http://ahmedas91.github.io/blog/2016/04/05/model-evaluation-and-validation-using-boston-housing-prices/</guid>
-      <description>&lt;iframe src=&#34;https://nbviewer.jupyter.org/gist/ahmedas91/f93dc91562c06549f5890924d50d7c61&#34; width=&#34;1000&#34; height=&#34;6800&#34;&gt;&lt;/iframe&gt; 
 </description>
     </item>
     
