@@ -30,6 +30,192 @@
     </item>
     
     <item>
+      <title>Efficient Frontier with Python</title>
+      <link>http://ahmedas91.github.io/blog/2016/03/01/efficient-frontier-with-python/</link>
+      <pubDate>Tue, 01 Mar 2016 20:55:56 +0300</pubDate>
+      
+      <guid>http://ahmedas91.github.io/blog/2016/03/01/efficient-frontier-with-python/</guid>
+      <description>&lt;p&gt;In a previous post, we naively selected growth companies and constructed a uniform-weigh portfolio out of them. In this post, we are going to use the same list of companies to construct a minimum-vaiance portfolios based on Harry Markowitz&amp;rsquo;s &lt;a href=&#34;http://www.efalken.com/LowVolClassics/markowitz_JF1952.pdf&#34;&gt;&amp;lsquo;Portfolio Selection&amp;rsquo; paper&lt;/a&gt; published 1952. Portfolio theory in a nutshell is finding the optimal wights that maximizes the return given a level of risk (variance or standard deviation) or the other way around, minimize the risk given an expected return. We are only going to need some matrix algebra and quadratic programming to explain the mathematics behind the theory. Dr. Eric Zivot&amp;rsquo;s &lt;a href=&#34;http://faculty.washington.edu/ezivot/econ424/portfolioTheoryMatrix.pdf&#34;&gt;notes&lt;/a&gt; provides a great detailed explanation using matrix algebra and most below is taken from his notes.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s say we have N companies and $x$ is a vector of initial random weighs for the portfolio, &lt;code&gt;$\mu$&lt;/code&gt; is a vector of the average returns and &lt;code&gt;${\sigma  }^{ 2 } $&lt;/code&gt; is an &lt;code&gt;$N\times N$&lt;/code&gt; covariance matrix where:&lt;/p&gt;
+
+&lt;div&gt;$$\mu =\begin{bmatrix} { \mu  }_{ 1 } \\ { \mu  }_{ 2 } \\ \vdots  \\ { \mu  }_{ N } \end{bmatrix}\quad x=\begin{bmatrix} { x }_{ 1 } \\ { x }_{ 2 } \\ \vdots  \\ { x }_{ N } \end{bmatrix}\quad \Sigma  =\begin{bmatrix} { \sigma  }_{ 11 } &amp; { \sigma  }_{ 12 } &amp; \dots  &amp; { \sigma  }_{ 1N } \\ { \sigma  }_{ 21 } &amp; { \sigma  }_{ 22 } &amp; \cdots  &amp; { \sigma  }_{ 11 } \\ \vdots  &amp; \vdots  &amp; \ddots  &amp; \vdots  \\ { \sigma  }_{ N1 } &amp; { \sigma  }_{ 11 } &amp; \dots  &amp; { \sigma  }_{ NN } \end{bmatrix}$$&lt;/div&gt;
+
+&lt;p&gt;The portfolio return $R$ and variance &lt;code&gt;${\sigma  }^{ 2 }$&lt;/code&gt; are calculated by:&lt;/p&gt;
+
+&lt;div&gt;$$R = x&#39;\mu$$&lt;/div&gt;
+
+&lt;div&gt;$$\sigma = x&#39;\Sigma x $$&lt;/div&gt;
+
+&lt;p&gt;The main problem here is finding the optimal weigh vector &lt;code&gt;$x$&lt;/code&gt; that satisfies either one of the conditions below depending on whether the investor requires a minimum level of risk or maximum return:&lt;/p&gt;
+
+&lt;div&gt;$$\underset { x }{ min } \quad { \sigma  }^{ 2 }=x&#39;\Sigma x\quad s.t.\quad \mu =x&#39;{ \mu  }_{ required }\quad and\quad x&#39;1=1$$&lt;/div&gt;
+
+&lt;p&gt;or&lt;/p&gt;
+
+&lt;div&gt;$$\underset { x }{ max } \quad R =x&#39;{ \mu  }\quad s.t.\quad \Sigma =x&#39;{ \Sigma  }_{ required }x\quad and\quad x&#39;1=1$$&lt;/div&gt;
+
+&lt;p&gt;Solving either of them will give a portfolio that&amp;rsquo;s on the efficient frontier which is, according to &lt;a href=&#34;http://www.investopedia.com/terms/e/efficientfrontier.asp&#34;&gt;investopedia&lt;/a&gt; explanation, a set of optimal portfolios that offers the highest expected return for a defined level of risk or the lowest risk for a given level of expected return. And here is where we&amp;rsquo;re going to start working on python (repo on &lt;a href=&#34;https://github.com/ahmedas91/efficient_frontier&#34;&gt;github&lt;/a&gt;). We&amp;rsquo;re going to draw all the possible portfolios that satisfies the conditions above. The examples &lt;a href=&#34;https://plot.ly/ipython-notebooks/markowitz-portfolio-optimization/&#34;&gt;here&lt;/a&gt; and &lt;a href=&#34;https://wellecks.wordpress.com/2014/03/23/portfolio-optimization-with-python/&#34;&gt;here&lt;/a&gt; helped me a lot writing the code. Actually, they provides better explanation of the codes than me. The hardest part was trying to solve the optimization problem using &lt;code&gt;cvxopt&lt;/code&gt; library.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;#import required libraries
+import pandas as pd
+import numpy as np
+import pandas_datareader.data as web
+import datetime
+import plotly.graph_objs as go
+from plotly.offline import download_plotlyjs, init_notebook_mode, iplot
+import cufflinks as cf
+init_notebook_mode()
+import cvxopt as opt
+from cvxopt import solvers
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;First let&amp;rsquo;s import the daily prices of the companies using the same period from the previous post from 1/1/2013 to 12/31/2015.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;data = pd.read_csv(&amp;quot;TOP_COMP_2012.csv&amp;quot;)
+start = datetime.datetime(2013, 1, 1)
+end = datetime.datetime(2015, 12, 31)
+tickers = list(data[&#39;ticker&#39;])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;ls_key = &#39;Adj Close&#39;
+f = web.DataReader(tickers, &#39;yahoo&#39;,start,end)
+cleanData = f.ix[ls_key]
+stock_data = pd.DataFrame(cleanData)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now we&amp;rsquo;ll calculate the monthly returns of the stocks. Fortunately pandas library has a function resumaple that can perform operations on a group of specified periods (in our case by month).&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;monthly_returns = stock_data.resample(&#39;BM&#39;, how=lambda x: (x[-1]/x[0])-1)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To get beautiful graphs, we are only going to choose five random companies from the list.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;companies = list(monthly_returns.sample(5,axis=1, random_state=4).columns)
+companies #prints [&#39;TECH&#39;, &#39;WWD&#39;, &#39;CMPR&#39;, &#39;GIS&#39;, &#39;EW&#39;]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;stock_data[companies].iplot(yTitle=&#39;Daily Price&#39;,dimensions=(950, 500))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;iframe width=&#34;900&#34; height=&#34;400&#34; frameborder=&#34;0&#34; scrolling=&#34;no&#34; src=&#34;https://plot.ly/~ahmedas91/8.embed&#34;&gt;&lt;/iframe&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;monthly_returns[companies].iplot(yTitle=&#39;Monthly Returns&#39;,dimensions=(950, 500))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;iframe width=&#34;900&#34; height=&#34;400&#34; frameborder=&#34;0&#34; scrolling=&#34;no&#34; src=&#34;https://plot.ly/~ahmedas91/10.embed&#34;&gt;&lt;/iframe&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;#Function to get evctor $x$ of random portfolio weighs that sums to 1:
+def random_wieghts(n):
+    a = np.random.rand(n)
+    return a/a.sum()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def initial_portfolio(monthly_returns):
+    #monthly_returns = data.resample(&#39;BM&#39;, how=lambda x: (x[-1]/x[0])-1)
+    
+    cov = np.matrix(monthly_returns.cov())
+    expected_returns = np.matrix(monthly_returns.mean())
+    wieghs = np.matrix(random_wieghts(expected_returns.shape[1]))
+    
+    mu = wieghs.dot(expected_returns.T)
+    sigma = np.sqrt(wieghs * cov.dot(wieghs.T))
+    
+    return mu[0,0],sigma[0,0]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;n_portfolios = 1000
+means, stds = np.column_stack([
+    initial_portfolio(monthly_returns[companies]) 
+    for _ in xrange(n_portfolios)
+])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;iplot({
+&#39;data&#39;:[
+    go.Scatter(
+                x = stds,
+                y = means,
+                mode = &#39;markers&#39;,
+                name = &#39;Random Portfolio&#39;)
+        ],
+&#39;layout&#39;: go.Layout(yaxis=go.YAxis(title=&#39;Means&#39;),
+                    xaxis=go.XAxis(title=&#39;stdv&#39;))
+})
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;iframe width=&#34;900&#34; height=&#34;400&#34; frameborder=&#34;0&#34; scrolling=&#34;no&#34; src=&#34;https://plot.ly/~ahmedas91/12.embed&#34;&gt;&lt;/iframe&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import cvxopt as opt
+from cvxopt import solvers
+
+def frontier(monthly_returns):
+    cov = np.matrix(monthly_returns.cov())
+    n = monthly_returns.shape[1]
+    avg_ret = np.matrix(monthly_returns.mean()).T
+    r_min = 0.01
+    mus = []
+    for i in range(120):
+        r_min += 0.0001
+        mus.append(r_min)
+    P = opt.matrix(cov)
+    q = opt.matrix(np.zeros((n, 1)))
+    G = opt.matrix(np.concatenate((
+                -np.transpose(np.array(avg_ret)), 
+                -np.identity(n)), 0))
+    A = opt.matrix(1.0, (1,n))
+    b = opt.matrix(1.0)
+    opt.solvers.options[&#39;show_progress&#39;] = False
+    portfolio_weights = [solvers.qp(P, q, G,
+                                    opt.matrix(np.concatenate((-np.ones((1,1))*yy,
+                                                               np.zeros((n,1))), 0)), 
+                                    A, b)[&#39;x&#39;] for yy in mus]
+    portfolio_returns = [(np.matrix(x).T * avg_ret)[0,0] for x in portfolio_weights]
+    portfolio_stdvs = [np.sqrt(np.matrix(x).T * cov.T.dot(np.matrix(x)))[0,0] for x in portfolio_weights]
+    return portfolio_weights, portfolio_returns, portfolio_stdvs
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;w_f, mu_f, sigma_f = frontier(monthly_returns[companies])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;iplot({
+&#39;data&#39;:[
+    go.Scatter(
+                x = stds,
+                y = means,
+                mode = &#39;markers&#39;,
+                name = &#39;Random Portfolio&#39;),
+    go.Scatter(
+                x = sigma_f,
+                y = mu_f,
+                mode = &#39;lines+markers&#39;,
+                name = &#39;Efficient Frontier&#39;)
+            
+        ],
+&#39;layout&#39;: go.Layout(yaxis=go.YAxis(title=&#39;Means&#39;),
+                    xaxis=go.XAxis(title=&#39;stdv&#39;))
+})
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;iframe width=&#34;900&#34; height=&#34;400&#34; frameborder=&#34;0&#34; scrolling=&#34;no&#34; src=&#34;https://plot.ly/~ahmedas91/14.embed&#34;&gt;&lt;/iframe&gt;
+
+&lt;p&gt;We can see from the above graph that the efficient frontier take a shape of a parabola, and it represent all the efficient portfolios that can be constructed using the given companies. However, this is not it. We can also add a risk-free asset and find the Tangency Portfolio. But we&amp;rsquo;ll leave it for another post.&lt;/p&gt;
+
+&lt;p&gt;References:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://www.efalken.com/LowVolClassics/markowitz_JF1952.pdf&#34;&gt;http://www.efalken.com/LowVolClassics/markowitz_JF1952.pdf&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://faculty.washington.edu/ezivot/econ424/portfolioTheoryMatrix.pdf&#34;&gt;http://faculty.washington.edu/ezivot/econ424/portfolioTheoryMatrix.pdf&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://plot.ly/ipython-notebooks/markowitz-portfolio-optimization/&#34;&gt;https://plot.ly/ipython-notebooks/markowitz-portfolio-optimization/&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://wellecks.wordpress.com/2014/03/23/portfolio-optimization-with-python/&#34;&gt;https://wellecks.wordpress.com/2014/03/23/portfolio-optimization-with-python/&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Model Evaluation and Validation Using Boston Housing prices</title>
       <link>http://ahmedas91.github.io/blog/2016/02/20/model-evaluation-and-validation-using-boston-housing-prices/</link>
       <pubDate>Sat, 20 Feb 2016 20:55:56 +0300</pubDate>

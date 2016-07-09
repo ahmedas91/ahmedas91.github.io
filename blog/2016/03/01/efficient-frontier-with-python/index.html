@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>Efficient Frontier with Python &middot; Ahmad Mohammad</title>
+
+  
+  <link rel="stylesheet" href="http://ahmedas91.github.io/css/poole.css">
+  <link rel="stylesheet" href="http://ahmedas91.github.io/css/hyde.css">
+  <link rel="stylesheet" href="http://ahmedas91.github.io/css/poole-overrides.css">
+  <link rel="stylesheet" href="http://ahmedas91.github.io/css/hyde-overrides.css">
+  <link rel="stylesheet" href="http://ahmedas91.github.io/css/hyde-x.css">
+  <link rel="stylesheet" href="http://ahmedas91.github.io/css/highlight/googlecode.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://ahmedas91.github.io/touch-icon-144-precomposed.png">
+  <link href="http://ahmedas91.github.io/favicon.png" rel="icon">
+
+  
+  
+  
+  
+
+  <meta name="description" content="n a previous post, we naively selected growth companies and constructed a uniform-weigh portfolio out of them. In this post, we are going to use the same list of companies to construct a minimum-variance portfolio based on Harry Markowitz portfolio theory.">
+  <meta name="keywords" content="your,default,page,keywords">
+  
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-77589510-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+  
+</head>
+
+<body class="theme-base-0d">
+<div class="sidebar">
+  <div class="container">
+    <div class="sidebar-about">
+      
+        <img src="https://www.gravatar.com/avatar/a37ea5697481d6e1d370d499c8f22694?s=200"
+             alt="gravatar" title="Ahmad Mohammad">
+      
+      <h1>Ahmad Mohammad</h1>
+      <p class="lead">Just a simple ipythone notebook blog. All codes are in Python (still under development)</p>
+    </div>
+
+    <ul class="sidebar-nav">
+      <li class="sidebar-nav-item"><a href="http://ahmedas91.github.io/">Home</a></li>
+      
+      <li class="sidebar-nav-item"><a href="http://ahmedas91.github.io/about/">About Me</a></li>
+      
+    </ul>
+
+    <ul class="sidebar-nav">
+      <li class="sidebar-nav-item">
+      <a href="https://github.com/ahmedas91"><i class="fa fa-github-square fa-3x"></i></a>
+      
+      
+      <a href="https://kw.linkedin.com/in/ahmadmoham"><i class="fa fa-linkedin-square fa-3x"></i></a>
+      
+      
+      
+      
+      
+      </li>
+    </ul>
+
+
+
+    <p>Copyright &copy; 2016 <a href="http://ahmedas91.github.io/license/">License</a><br/>
+       Powered by <a href="http://gohugo.io">Hugo</a> and <a href="https://github.com/zyro/hyde-x">Hyde-X</a></p>
+  </div>
+</div>
+
+
+
+
+<div class="content container">
+  <div class="post">
+    <h1 class="post-title">Efficient Frontier with Python</h1>
+    <span class="post-date">Mar 1, 2016
+    
+    <br/>
+    
+    </span>
+    <p>In a previous post, we naively selected growth companies and constructed a uniform-weigh portfolio out of them. In this post, we are going to use the same list of companies to construct a minimum-vaiance portfolios based on Harry Markowitz&rsquo;s <a href="http://www.efalken.com/LowVolClassics/markowitz_JF1952.pdf">&lsquo;Portfolio Selection&rsquo; paper</a> published 1952. Portfolio theory in a nutshell is finding the optimal wights that maximizes the return given a level of risk (variance or standard deviation) or the other way around, minimize the risk given an expected return. We are only going to need some matrix algebra and quadratic programming to explain the mathematics behind the theory. Dr. Eric Zivot&rsquo;s <a href="http://faculty.washington.edu/ezivot/econ424/portfolioTheoryMatrix.pdf">notes</a> provides a great detailed explanation using matrix algebra and most below is taken from his notes.</p>
+
+<p>Let&rsquo;s say we have N companies and $x$ is a vector of initial random weighs for the portfolio, <code>$\mu$</code> is a vector of the average returns and <code>${\sigma  }^{ 2 } $</code> is an <code>$N\times N$</code> covariance matrix where:</p>
+
+<div>$$\mu =\begin{bmatrix} { \mu  }_{ 1 } \\ { \mu  }_{ 2 } \\ \vdots  \\ { \mu  }_{ N } \end{bmatrix}\quad x=\begin{bmatrix} { x }_{ 1 } \\ { x }_{ 2 } \\ \vdots  \\ { x }_{ N } \end{bmatrix}\quad \Sigma  =\begin{bmatrix} { \sigma  }_{ 11 } & { \sigma  }_{ 12 } & \dots  & { \sigma  }_{ 1N } \\ { \sigma  }_{ 21 } & { \sigma  }_{ 22 } & \cdots  & { \sigma  }_{ 11 } \\ \vdots  & \vdots  & \ddots  & \vdots  \\ { \sigma  }_{ N1 } & { \sigma  }_{ 11 } & \dots  & { \sigma  }_{ NN } \end{bmatrix}$$</div>
+
+<p>The portfolio return $R$ and variance <code>${\sigma  }^{ 2 }$</code> are calculated by:</p>
+
+<div>$$R = x'\mu$$</div>
+
+<div>$$\sigma = x'\Sigma x $$</div>
+
+<p>The main problem here is finding the optimal weigh vector <code>$x$</code> that satisfies either one of the conditions below depending on whether the investor requires a minimum level of risk or maximum return:</p>
+
+<div>$$\underset { x }{ min } \quad { \sigma  }^{ 2 }=x'\Sigma x\quad s.t.\quad \mu =x'{ \mu  }_{ required }\quad and\quad x'1=1$$</div>
+
+<p>or</p>
+
+<div>$$\underset { x }{ max } \quad R =x'{ \mu  }\quad s.t.\quad \Sigma =x'{ \Sigma  }_{ required }x\quad and\quad x'1=1$$</div>
+
+<p>Solving either of them will give a portfolio that&rsquo;s on the efficient frontier which is, according to <a href="http://www.investopedia.com/terms/e/efficientfrontier.asp">investopedia</a> explanation, a set of optimal portfolios that offers the highest expected return for a defined level of risk or the lowest risk for a given level of expected return. And here is where we&rsquo;re going to start working on python (repo on <a href="https://github.com/ahmedas91/efficient_frontier">github</a>). We&rsquo;re going to draw all the possible portfolios that satisfies the conditions above. The examples <a href="https://plot.ly/ipython-notebooks/markowitz-portfolio-optimization/">here</a> and <a href="https://wellecks.wordpress.com/2014/03/23/portfolio-optimization-with-python/">here</a> helped me a lot writing the code. Actually, they provides better explanation of the codes than me. The hardest part was trying to solve the optimization problem using <code>cvxopt</code> library.</p>
+
+<pre><code class="language-python">#import required libraries
+import pandas as pd
+import numpy as np
+import pandas_datareader.data as web
+import datetime
+import plotly.graph_objs as go
+from plotly.offline import download_plotlyjs, init_notebook_mode, iplot
+import cufflinks as cf
+init_notebook_mode()
+import cvxopt as opt
+from cvxopt import solvers
+</code></pre>
+
+<p>First let&rsquo;s import the daily prices of the companies using the same period from the previous post from 1/1/2013 to 12/31/2015.</p>
+
+<pre><code class="language-python">data = pd.read_csv(&quot;TOP_COMP_2012.csv&quot;)
+start = datetime.datetime(2013, 1, 1)
+end = datetime.datetime(2015, 12, 31)
+tickers = list(data['ticker'])
+</code></pre>
+
+<pre><code class="language-python">ls_key = 'Adj Close'
+f = web.DataReader(tickers, 'yahoo',start,end)
+cleanData = f.ix[ls_key]
+stock_data = pd.DataFrame(cleanData)
+</code></pre>
+
+<p>Now we&rsquo;ll calculate the monthly returns of the stocks. Fortunately pandas library has a function resumaple that can perform operations on a group of specified periods (in our case by month).</p>
+
+<pre><code class="language-python">monthly_returns = stock_data.resample('BM', how=lambda x: (x[-1]/x[0])-1)
+</code></pre>
+
+<p>To get beautiful graphs, we are only going to choose five random companies from the list.</p>
+
+<pre><code class="language-python">companies = list(monthly_returns.sample(5,axis=1, random_state=4).columns)
+companies #prints ['TECH', 'WWD', 'CMPR', 'GIS', 'EW']
+</code></pre>
+
+<pre><code class="language-python">stock_data[companies].iplot(yTitle='Daily Price',dimensions=(950, 500))
+</code></pre>
+
+<iframe width="900" height="400" frameborder="0" scrolling="no" src="https://plot.ly/~ahmedas91/8.embed"></iframe>
+
+<pre><code class="language-python">monthly_returns[companies].iplot(yTitle='Monthly Returns',dimensions=(950, 500))
+</code></pre>
+
+<iframe width="900" height="400" frameborder="0" scrolling="no" src="https://plot.ly/~ahmedas91/10.embed"></iframe>
+
+<pre><code class="language-python">#Function to get evctor $x$ of random portfolio weighs that sums to 1:
+def random_wieghts(n):
+    a = np.random.rand(n)
+    return a/a.sum()
+</code></pre>
+
+<pre><code class="language-python">def initial_portfolio(monthly_returns):
+    #monthly_returns = data.resample('BM', how=lambda x: (x[-1]/x[0])-1)
+    
+    cov = np.matrix(monthly_returns.cov())
+    expected_returns = np.matrix(monthly_returns.mean())
+    wieghs = np.matrix(random_wieghts(expected_returns.shape[1]))
+    
+    mu = wieghs.dot(expected_returns.T)
+    sigma = np.sqrt(wieghs * cov.dot(wieghs.T))
+    
+    return mu[0,0],sigma[0,0]
+</code></pre>
+
+<pre><code class="language-python">n_portfolios = 1000
+means, stds = np.column_stack([
+    initial_portfolio(monthly_returns[companies]) 
+    for _ in xrange(n_portfolios)
+])
+</code></pre>
+
+<pre><code class="language-python">iplot({
+'data':[
+    go.Scatter(
+                x = stds,
+                y = means,
+                mode = 'markers',
+                name = 'Random Portfolio')
+        ],
+'layout': go.Layout(yaxis=go.YAxis(title='Means'),
+                    xaxis=go.XAxis(title='stdv'))
+})
+</code></pre>
+
+<iframe width="900" height="400" frameborder="0" scrolling="no" src="https://plot.ly/~ahmedas91/12.embed"></iframe>
+
+<pre><code class="language-python">import cvxopt as opt
+from cvxopt import solvers
+
+def frontier(monthly_returns):
+    cov = np.matrix(monthly_returns.cov())
+    n = monthly_returns.shape[1]
+    avg_ret = np.matrix(monthly_returns.mean()).T
+    r_min = 0.01
+    mus = []
+    for i in range(120):
+        r_min += 0.0001
+        mus.append(r_min)
+    P = opt.matrix(cov)
+    q = opt.matrix(np.zeros((n, 1)))
+    G = opt.matrix(np.concatenate((
+                -np.transpose(np.array(avg_ret)), 
+                -np.identity(n)), 0))
+    A = opt.matrix(1.0, (1,n))
+    b = opt.matrix(1.0)
+    opt.solvers.options['show_progress'] = False
+    portfolio_weights = [solvers.qp(P, q, G,
+                                    opt.matrix(np.concatenate((-np.ones((1,1))*yy,
+                                                               np.zeros((n,1))), 0)), 
+                                    A, b)['x'] for yy in mus]
+    portfolio_returns = [(np.matrix(x).T * avg_ret)[0,0] for x in portfolio_weights]
+    portfolio_stdvs = [np.sqrt(np.matrix(x).T * cov.T.dot(np.matrix(x)))[0,0] for x in portfolio_weights]
+    return portfolio_weights, portfolio_returns, portfolio_stdvs
+</code></pre>
+
+<pre><code class="language-python">w_f, mu_f, sigma_f = frontier(monthly_returns[companies])
+</code></pre>
+
+<pre><code class="language-python">iplot({
+'data':[
+    go.Scatter(
+                x = stds,
+                y = means,
+                mode = 'markers',
+                name = 'Random Portfolio'),
+    go.Scatter(
+                x = sigma_f,
+                y = mu_f,
+                mode = 'lines+markers',
+                name = 'Efficient Frontier')
+            
+        ],
+'layout': go.Layout(yaxis=go.YAxis(title='Means'),
+                    xaxis=go.XAxis(title='stdv'))
+})
+</code></pre>
+
+<iframe width="900" height="400" frameborder="0" scrolling="no" src="https://plot.ly/~ahmedas91/14.embed"></iframe>
+
+<p>We can see from the above graph that the efficient frontier take a shape of a parabola, and it represent all the efficient portfolios that can be constructed using the given companies. However, this is not it. We can also add a risk-free asset and find the Tangency Portfolio. But we&rsquo;ll leave it for another post.</p>
+
+<p>References:</p>
+
+<ol>
+<li><p><a href="http://www.efalken.com/LowVolClassics/markowitz_JF1952.pdf">http://www.efalken.com/LowVolClassics/markowitz_JF1952.pdf</a></p></li>
+
+<li><p><a href="http://faculty.washington.edu/ezivot/econ424/portfolioTheoryMatrix.pdf">http://faculty.washington.edu/ezivot/econ424/portfolioTheoryMatrix.pdf</a></p></li>
+
+<li><p><a href="https://plot.ly/ipython-notebooks/markowitz-portfolio-optimization/">https://plot.ly/ipython-notebooks/markowitz-portfolio-optimization/</a></p></li>
+
+<li><p><a href="https://wellecks.wordpress.com/2014/03/23/portfolio-optimization-with-python/">https://wellecks.wordpress.com/2014/03/23/portfolio-optimization-with-python/</a></p></li>
+</ol>
+
+  </div>
+  
+</div>
+
+
+
+
+<script src="http://ahmedas91.github.io/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>
+
+
+<script type="text/javascript"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[','\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
