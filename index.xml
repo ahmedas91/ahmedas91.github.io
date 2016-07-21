@@ -6,8 +6,207 @@
     <description>Recent content on Ahmad Mohammad</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 25 Jun 2016 20:55:56 +0300</lastBuildDate>
+    <lastBuildDate>Fri, 01 Jul 2016 20:55:56 +0300</lastBuildDate>
     <atom:link href="http://ahmedas91.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Predicting US Equities Trends Using Random Forests</title>
+      <link>http://ahmedas91.github.io/blog/2016/07/01/predicting-us-equities-trends-using-random-forests/</link>
+      <pubDate>Fri, 01 Jul 2016 20:55:56 +0300</pubDate>
+      
+      <guid>http://ahmedas91.github.io/blog/2016/07/01/predicting-us-equities-trends-using-random-forests/</guid>
+      <description>
+
+&lt;h3 id=&#34;introduction:541041d1d76d4cc48b7fd4c33ed48b7e&#34;&gt;Introduction&lt;/h3&gt;
+
+&lt;p&gt;Stock market prediction is difficult task because of the complexities of the markets and the variables influencing them. However, there are still quantitative hedge funds which are able to gain an edge in the market by using complicated algorithms for prediction and generating buy and sell signal (&lt;a href=&#34;https://en.wikipedia.org/wiki/Two_Sigma_Investments&#34;&gt;Two Sigma Investments&lt;/a&gt; , &lt;a href=&#34;https://en.wikipedia.org/wiki/Renaissance_Technologies&#34;&gt;Renaissance Technologies&lt;/a&gt;, &lt;a href=&#34;https://en.wikipedia.org/wiki/D._E._Shaw_%26_Co.]&#34;&gt;D. E. Shaw &amp;amp; Co.&lt;/a&gt;). In this post, we are going to explore one such model, random forests, for stock market prediction.&lt;/p&gt;
+
+&lt;p&gt;Depending on whether we are trying to predict the price trend or the exact price, stock market prediction can be a classification problem or a regression one. But we are only going to deal with predicting the price trend as a starting point in this post. The machine learning model we are going to use is random forests. One of the main advantages of the random forests model is that we do not need any data scaling or normalization before training it. Also the model does not strictly need parameter tuning such as in the case of support vector machine (SVM) and neural networks (NN) models. However, research indicates that SVM and NN achieved astonishing results in predicting stock price movements (1). But we will leave them for another separate post. Manojlovic and Staduhar (2) provides a great implementation of random forests for stock price prediction. This post is a semi-replication of their paper with few differences. They used the model to predict the stock direction of Zagreb stock exchange 5 and 10 days ahead achieving accuracies ranging from 0.76 to 0.816. We are going to use the same methods as in the paper with similar technical indicators (only two different ones) to predict the US stock market movement instead of Zagreb stock exchange and varying the days ahead from 1 to 20 days head instead of just 5 and 10 days ahead.&lt;/p&gt;
+
+&lt;h3 id=&#34;research-data:541041d1d76d4cc48b7fd4c33ed48b7e&#34;&gt;Research Data&lt;/h3&gt;
+
+&lt;p&gt;I chose 8 of the top companies in the S&amp;amp;P 500 in terms of market cap: AAP, BRK-B, GE, JNJ, MSFT, T, VZ, XOM.&lt;/p&gt;
+
+&lt;iframe width=&#34;950&#34; height=&#34;400&#34; frameborder=&#34;0&#34; scrolling=&#34;no&#34; src=&#34;https://plot.ly/~ahmedas91/19.embed&#34;&gt;&lt;/iframe&gt;
+
+&lt;p&gt;The data sets for all the stocks are from May 5th, 1998 to May 4th, 2015 with total of 4277 days (the figure below shows a higher range).  Since we have 8 stocks and we are going to predict the price movement from 1 to 20 days ahead, we will have a total of 160 data sets to train and evaluate. But before proceeding with training the data, we had to check wether the data are balanced. The figure below shows the percentage of positive returns instances for each day and for each stock. Fortunately, the data does not need to be balanced since they are almost evenly split for all the stocks.&lt;/p&gt;
+
+&lt;iframe width=&#34;950&#34; height=&#34;600&#34; frameborder=&#34;0&#34; scrolling=&#34;no&#34; src=&#34;https://plot.ly/~ahmedas91/16.embed&#34;&gt;&lt;/iframe&gt; 
+
+&lt;p&gt;The technical indicators were calculated with their default parameters settings using the awesome &lt;code&gt;TA-Lib&lt;/code&gt; python package. They are summarized in the table below where &lt;code&gt;${ P }_{ t }$&lt;/code&gt; is the closing price at the day t, &lt;code&gt;${ H }_{ t }$&lt;/code&gt; is the high price at day t, &lt;code&gt;${ L}_{ t }$&lt;/code&gt; is the low price at day t, &lt;code&gt;${ HH}_{ n }$&lt;/code&gt; is the highest high during the last n days, &lt;code&gt;${ LL}_{ t }$&lt;/code&gt; is the lowest low during the last n days, and &lt;code&gt;$EMA(n)$&lt;/code&gt; is the exponential moving average.&lt;/p&gt;
+
+
+&lt;figure &gt;
+    
+        &lt;img src=&#34;http://ahmedas91.github.io/images/rf_table.png&#34; /&gt;
+    
+    
+&lt;/figure&gt;
+
+
+&lt;h3 id=&#34;model-and-method:541041d1d76d4cc48b7fd4c33ed48b7e&#34;&gt;Model and Method&lt;/h3&gt;
+
+&lt;p&gt;As mentioned above, one of the advantages of random forests is that it does not strictly need parameter tuning. Random forests, first introduced by breidman (3), is an aggregation of another weaker machine learning model, decision trees. First, a bootstrapped sample is taken from the training set. Then, a random number of features are chosen to form a decision tree. Finally, each tree is trained and grown to the fullest extend possible without pruning. Those three steps are repeated n times form random decision trees.  Each tree gives a classification and the classification that has the most votes is chosen. For the number of trees in the random forests, I chose 300 trees. I could go for a higher number but according to research, a larger number of trees does not always give better performance and only increases the computational cost (4). Since we will not be tuning the model&amp;rsquo;s parameters, we are only going to split the data to train and test set (no validation set). For the scores, I used the accuracy score and the f1 score. The accuracy score is simply the percentage (or fraction) of the instances correctly classified. The f1 score calculated by&lt;/p&gt;
+
+&lt;p&gt;$$F1 =2\frac { precision\times recall }{ precision+recall } $$
+$$precision=\frac { tp }{ tp+fp } $$
+$$recall=\frac { tp }{ tp+fn } $$&lt;/p&gt;
+
+&lt;p&gt;where &lt;code&gt;$tp$&lt;/code&gt; is the number of positive instances classifier as positive, &lt;code&gt;$fp$&lt;/code&gt; is the number of negative instances classified as positive and &lt;code&gt;$fn$&lt;/code&gt; is the number of positive instances classified as negative. Because of the randomness of the model, each train set is trained 5 times and the average of the scores on the test set is the final score. All of the calculation were done by python&amp;rsquo;s &lt;code&gt;scikit-learn&lt;/code&gt; library.&lt;/p&gt;
+
+&lt;h3 id=&#34;results:541041d1d76d4cc48b7fd4c33ed48b7e&#34;&gt;Results&lt;/h3&gt;
+
+&lt;iframe width=&#34;950&#34; height=&#34;400&#34; frameborder=&#34;0&#34; scrolling=&#34;no&#34; src=&#34;https://plot.ly/~ahmedas91/20.embed&#34;&gt;&lt;/iframe&gt;
+
+&lt;iframe width=&#34;950&#34; height=&#34;400&#34; frameborder=&#34;0&#34; scrolling=&#34;no&#34; src=&#34;https://plot.ly/~ahmedas91/22.embed&#34;&gt;&lt;/iframe&gt;
+
+&lt;p&gt;As seen from the two figures above, we get poor results for small number of days ahead (from 1 to 4) and greater results as the number of days ahead increases afterworlds. For almost all the stocks for both scores, the highest scores are in the range of 17 to 20-days ahead.&lt;/p&gt;
+
+&lt;h3 id=&#34;conclusion:541041d1d76d4cc48b7fd4c33ed48b7e&#34;&gt;Conclusion&lt;/h3&gt;
+
+&lt;p&gt;Complex quantitative models to predict the stock market price movement and generate buy and sell signals has been always used by hedge funds and investment banks on wall street. In this post, we demonstrated the use of one such model, random forests, to predict the price movement (positive or negative) of some of the major US equities. We got satisfying results with ten technical indicators when predicting the price movement mostly within 14 to 20 days ahead witch scores ranging from 0.78 to 0.84 for the accuracy scores and from 0.76 to 0.87 for the f1 scores.We could have better results if we add more features that includes fundamentals and macro economic variables. Also, since commodities are highly leveraged, we could use minute by minute data to predict the movement of commodity prices at the end of the day. Actually this was my initial choice of data but I could not find a source that provides minute by minute data for free.&lt;/p&gt;
+
+&lt;h3 id=&#34;references:541041d1d76d4cc48b7fd4c33ed48b7e&#34;&gt;References&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Yakup Kara, Melek Acar Boyacioglu, Ömer Kaan Baykan, Predicting direction of stock price index movement using artificial neural networks and support vector machines: The sample of the Istanbul Stock Exchange, Expert Systems with Applications, Volume 38, Issue 5, May 2011, Pages 5311-5319.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Manojlovic, T., &amp;amp; Stajduhar, I.. (2015). Predicting stock market trends using random forests: A sample of the Zagreb stock exchange. MIPRO.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;L. Breiman, Random forests, Machine Learning, 45(1):5–32, 2001&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Oshiro, Thais Mayumi, Pedro Santoro Perez, and José Augusto Baranauskas. &amp;ldquo;How Many Trees in a Random Forest?&amp;rdquo; Machine Learning and Data Mining in Pattern Recognition Lecture Notes in Computer Science (2012): 154-68. Web.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Code to produce all the results above below:&lt;/p&gt;
+
+&lt;iframe src=&#34;http://nbviewer.jupyter.org/gist/ahmedas91/9dca6aa31911bede1c8242ea861bd4f3&#34; width=&#34;1000&#34; height=&#34;6750&#34;&gt;&lt;/iframe&gt; 
+</description>
+    </item>
+    
+    <item>
+      <title>Hunting Down Growth Stocks</title>
+      <link>http://ahmedas91.github.io/blog/2016/06/26/hunting-down-growth-stocks/</link>
+      <pubDate>Sun, 26 Jun 2016 20:55:56 +0300</pubDate>
+      
+      <guid>http://ahmedas91.github.io/blog/2016/06/26/hunting-down-growth-stocks/</guid>
+      <description>
+
+&lt;p&gt;Growth companies are those with huge potential returns and are often found in the technology sector. Here is the official definition from &lt;a href=&#34;http://www.investopedia.com/terms/g/growthcompany.asp&#34;&gt;investing.com&lt;/a&gt;:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;A growth company is any firm whose business generates significant positive cash flows or earnings, which increase at significantly faster rates than the overall economy.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;So how can we spot those kind of companies? We can screan stocks based on annual earning growth, revenues growth, return on equity&amp;hellip;etc. We can also look for companies developing disruptive technologies. But could we just let the experts do it for us? for free? Well this is what I am exploring in this post.&lt;/p&gt;
+
+&lt;p&gt;Each year, a bunch of news sites and organizations publish lists of the most innovative companies. In this post, I aggregated those lists from the sites and compared the holding period return for the listed companies from 2012 to 2015. Not all companies in the lists were included. Only those with that are listed on either NASDAQ, NYSE and AMEX, and Trading in the stock market during the whole holding period. You can download the aggregated list from the &lt;a href=&#34;https://github.com/ahmedas91/Hunting_growth_stocks&#34;&gt;repo&lt;/a&gt; on github. The data are collected from the below soursec. Note that for Forves list, I could not find the whole list for 2012, only the top ten.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.forbes.com/sites/samanthasharf/2012/09/05/the-ten-most-innovative-companies-in-america/#3f28c5aa23d3&#34;&gt;Forbes&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.businessinsider.com/presenting-the-39-companies-that-will-win-through-innovation-2012-4?op=1&#34;&gt;Barclays&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://top100innovators.stateofinnovation.thomsonreuters.com/&#34;&gt;Thomson Reuters&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.strategyand.pwc.com/global/home/what-we-think/innovation1000/top-innovators-spenders#/tab-2012&#34;&gt;PWC&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www2.technologyreview.com/tr50/2012/?_ga=1.224498527.453581319.1458158445&#34;&gt;MIT&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.bcgperspectives.com/content/interactive/innovation_growth_most_innovative_companies_interactive_guide/&#34;&gt;BCG&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.fastcompany.com/section/most-innovative-companies-2012&#34;&gt;Fast Company&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;loading-the-data:41fdf1a60fa155412b6923f1b832c365&#34;&gt;loading the data&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# first we import the required libraries
+import pandas as pd
+import pandas_datareader.data as web
+import datetime
+import matplotlib.pyplot as plt
+%matplotlib inline  
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# Load the aggregated list of companies
+data = pd.read_csv(&amp;quot;TOP_COMP_2012.csv&amp;quot;)
+start = datetime.datetime(2013, 1, 1)
+end = datetime.datetime(2015, 12, 31)
+tickers = list(data[&#39;ticker&#39;])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# importing the stock prices from yahoo finance
+ls_key = &#39;Adj Close&#39;
+f = web.DataReader(tickers, &#39;yahoo&#39;,start,end)
+cleanData = f.ix[ls_key]
+stock_data = pd.DataFrame(cleanData)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;results:41fdf1a60fa155412b6923f1b832c365&#34;&gt;Results&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# Calulating the holding period returns 
+returns = (stock_data.iloc[-1]/stock_data.iloc[0] - 1)
+returns = pd.DataFrame(returns)
+returns = returns.sort_values(by = [0], ascending=False)
+returns[&#39;ticker&#39;] = list(returns.index)
+returns.columns = [&#39;HPR&#39;,&#39;ticker&#39;]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;#Average return
+avg_return = returns[&#39;HPR&#39;].mean(axis=0)*100
+# percentage of positive returns
+percentage_positive = len(returns[returns[&#39;HPR&#39;]&amp;gt;0])/float(len(returns))*100 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import plotly.graph_objs as go
+from plotly.offline import download_plotlyjs, init_notebook_mode, iplot
+init_notebook_mode()
+iplot({
+&amp;quot;data&amp;quot;: [
+    go.Bar(
+        x=returns[&#39;ticker&#39;],
+        y=returns[&#39;HPR&#39;]
+    )
+        ],
+&#39;layout&#39;: go.Layout(yaxis=go.YAxis(title=&#39;Holding Period Return&#39;, tickformat=&#39;%&#39;), 
+                    autosize=False,
+                    width=850,
+                    height=600)
+    })
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;iframe width=&#34;950&#34; height=&#34;450&#34; frameborder=&#34;0&#34; scrolling=&#34;no&#34; src=&#34;https://plot.ly/~ahmedas91/0.embed&#34;&gt;&lt;/iframe&gt;
+
+&lt;p&gt;The above chart shows an astonishing results with an average return of 66%. Around 87% of the companies showed a positive holding period return. So can we conclude that we can just rely on the experts for hunting big growth companies? Let&amp;rsquo;s not get our hopes up yet. Let&amp;rsquo;s first check if we just invested in the S&amp;amp;P 500 and compare its cumulative returns with a portfolio of equal weights of the stocks above.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-pyhon&#34;&gt;# Importing the s&amp;amp;p price index
+ff = web.DataReader(&amp;quot;^GSPC&amp;quot;, &#39;yahoo&#39;,start,end)
+s_p = pd.DataFrame(ff[&#39;Adj Close&#39;])
+
+# calculating the daily cumulative returns during the period
+sp = pd.DataFrame([0])
+portfolio = pd.DataFrame([0])
+for i in range(1,len(stock_data)):
+    sp_returns = (s_p.iloc[i]/s_p.iloc[0] - 1)[0]
+    portfolio_returns = (stock_data.iloc[i]/stock_data.iloc[0] - 1).mean(axis=0)
+    sp = sp.append([sp_returns])
+    portfolio = portfolio.append([portfolio_returns])    
+cum_returns = pd.concat([portfolio, sp], axis=1)
+cum_returns.columns = [&#39;Portfolio&#39;,&#39;S&amp;amp;P&#39;]
+cum_returns = cum_returns.set_index(stock_data.index)
+
+iplot({
+&#39;data&#39;:[
+    go.Scatter(
+            x = cum_returns.index,
+            y = cum_returns[col],
+            name = col) for col in cum_returns.columns],
+&#39;layout&#39;: go.Layout(yaxis=go.YAxis(title=&#39;Holding Period Return&#39;, tickformat=&#39;%&#39;), 
+            autosize=False,
+            width=950,
+            height=600)
+})
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;iframe width=&#34;950&#34; height=&#34;450&#34; frameborder=&#34;0&#34; scrolling=&#34;no&#34; src=&#34;https://plot.ly/~ahmedas91/4.embed&#34;&gt;&lt;/iframe&gt;
+
+&lt;p&gt;Well, we&amp;rsquo;re still beating the market by about 30%. So can we really just let the experts do it for us? Maybe use their lists as preliminary screener only.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Kaggle Animal Shelter Competition</title>
@@ -239,130 +438,6 @@ def frontier(monthly_returns):
       
       <guid>http://ahmedas91.github.io/blog/2016/02/20/model-evaluation-and-validation-using-boston-housing-prices/</guid>
       <description>&lt;iframe src=&#34;https://nbviewer.jupyter.org/gist/ahmedas91/f93dc91562c06549f5890924d50d7c61&#34; width=&#34;1000&#34; height=&#34;6800&#34;&gt;&lt;/iframe&gt; 
-</description>
-    </item>
-    
-    <item>
-      <title>Hunting Down Growth Stocks</title>
-      <link>http://ahmedas91.github.io/blog/2016/02/15/hunting-down-growth-stocks/</link>
-      <pubDate>Mon, 15 Feb 2016 20:55:56 +0300</pubDate>
-      
-      <guid>http://ahmedas91.github.io/blog/2016/02/15/hunting-down-growth-stocks/</guid>
-      <description>
-
-&lt;p&gt;Growth companies are those with huge potential returns and are often found in the technology sector. Here is the official definition from &lt;a href=&#34;http://www.investopedia.com/terms/g/growthcompany.asp&#34;&gt;investing.com&lt;/a&gt;:&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;A growth company is any firm whose business generates significant positive cash flows or earnings, which increase at significantly faster rates than the overall economy.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;So how can we spot those kind of companies? We can screan stocks based on annual earning growth, revenues growth, return on equity&amp;hellip;etc. We can also look for companies developing disruptive technologies. But could we just let the experts do it for us? for free? Well this is what I am exploring in this post.&lt;/p&gt;
-
-&lt;p&gt;Each year, a bunch of news sites and organizations publish lists of the most innovative companies. In this post, I aggregated those lists from the sites and compared the holding period return for the listed companies from 2012 to 2015. Not all companies in the lists were included. Only those with that are listed on either NASDAQ, NYSE and AMEX, and Trading in the stock market during the whole holding period. You can download the aggregated list from the &lt;a href=&#34;https://github.com/ahmedas91/Hunting_growth_stocks&#34;&gt;repo&lt;/a&gt; on github. The data are collected from the below soursec. Note that for Forves list, I could not find the whole list for 2012, only the top ten.&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.forbes.com/sites/samanthasharf/2012/09/05/the-ten-most-innovative-companies-in-america/#3f28c5aa23d3&#34;&gt;Forbes&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.businessinsider.com/presenting-the-39-companies-that-will-win-through-innovation-2012-4?op=1&#34;&gt;Barclays&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://top100innovators.stateofinnovation.thomsonreuters.com/&#34;&gt;Thomson Reuters&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.strategyand.pwc.com/global/home/what-we-think/innovation1000/top-innovators-spenders#/tab-2012&#34;&gt;PWC&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://www2.technologyreview.com/tr50/2012/?_ga=1.224498527.453581319.1458158445&#34;&gt;MIT&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.bcgperspectives.com/content/interactive/innovation_growth_most_innovative_companies_interactive_guide/&#34;&gt;BCG&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.fastcompany.com/section/most-innovative-companies-2012&#34;&gt;Fast Company&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&#34;loading-the-data:41fdf1a60fa155412b6923f1b832c365&#34;&gt;loading the data&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# first we import the required libraries
-import pandas as pd
-import pandas_datareader.data as web
-import datetime
-import matplotlib.pyplot as plt
-%matplotlib inline  
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# Load the aggregated list of companies
-data = pd.read_csv(&amp;quot;TOP_COMP_2012.csv&amp;quot;)
-start = datetime.datetime(2013, 1, 1)
-end = datetime.datetime(2015, 12, 31)
-tickers = list(data[&#39;ticker&#39;])
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# importing the stock prices from yahoo finance
-ls_key = &#39;Adj Close&#39;
-f = web.DataReader(tickers, &#39;yahoo&#39;,start,end)
-cleanData = f.ix[ls_key]
-stock_data = pd.DataFrame(cleanData)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;results:41fdf1a60fa155412b6923f1b832c365&#34;&gt;Results&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# Calulating the holding period returns 
-returns = (stock_data.iloc[-1]/stock_data.iloc[0] - 1)
-returns = pd.DataFrame(returns)
-returns = returns.sort_values(by = [0], ascending=False)
-returns[&#39;ticker&#39;] = list(returns.index)
-returns.columns = [&#39;HPR&#39;,&#39;ticker&#39;]
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;#Average return
-avg_return = returns[&#39;HPR&#39;].mean(axis=0)*100
-# percentage of positive returns
-percentage_positive = len(returns[returns[&#39;HPR&#39;]&amp;gt;0])/float(len(returns))*100 
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import plotly.graph_objs as go
-from plotly.offline import download_plotlyjs, init_notebook_mode, iplot
-init_notebook_mode()
-iplot({
-&amp;quot;data&amp;quot;: [
-    go.Bar(
-        x=returns[&#39;ticker&#39;],
-        y=returns[&#39;HPR&#39;]
-    )
-        ],
-&#39;layout&#39;: go.Layout(yaxis=go.YAxis(title=&#39;Holding Period Return&#39;, tickformat=&#39;%&#39;), 
-                    autosize=False,
-                    width=850,
-                    height=600)
-    })
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;iframe width=&#34;900&#34; height=&#34;800&#34; frameborder=&#34;0&#34; scrolling=&#34;no&#34; src=&#34;https://plot.ly/~ahmedas91/0.embed&#34;&gt;&lt;/iframe&gt;
-
-&lt;p&gt;The above chart shows an astonishing results with an average return of 66%. Around 87% of the companies showed a positive holding period return. So can we conclude that we can just rely on the experts for hunting big growth companies? Let&amp;rsquo;s not get our hopes up yet. Let&amp;rsquo;s first check if we just invested in the S&amp;amp;P 500 and compare its cumulative returns with a portfolio of equal weights of the stocks above.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-pyhon&#34;&gt;# Importing the s&amp;amp;p price index
-ff = web.DataReader(&amp;quot;^GSPC&amp;quot;, &#39;yahoo&#39;,start,end)
-s_p = pd.DataFrame(ff[&#39;Adj Close&#39;])
-
-# calculating the daily cumulative returns during the period
-sp = pd.DataFrame([0])
-portfolio = pd.DataFrame([0])
-for i in range(1,len(stock_data)):
-    sp_returns = (s_p.iloc[i]/s_p.iloc[0] - 1)[0]
-    portfolio_returns = (stock_data.iloc[i]/stock_data.iloc[0] - 1).mean(axis=0)
-    sp = sp.append([sp_returns])
-    portfolio = portfolio.append([portfolio_returns])    
-cum_returns = pd.concat([portfolio, sp], axis=1)
-cum_returns.columns = [&#39;Portfolio&#39;,&#39;S&amp;amp;P&#39;]
-cum_returns = cum_returns.set_index(stock_data.index)
-
-iplot({
-&#39;data&#39;:[
-    go.Scatter(
-            x = cum_returns.index,
-            y = cum_returns[col],
-            name = col) for col in cum_returns.columns],
-&#39;layout&#39;: go.Layout(yaxis=go.YAxis(title=&#39;Holding Period Return&#39;, tickformat=&#39;%&#39;), 
-            autosize=False,
-            width=950,
-            height=600)
-})
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;iframe width=&#34;900&#34; height=&#34;800&#34; frameborder=&#34;0&#34; scrolling=&#34;no&#34; src=&#34;https://plot.ly/~ahmedas91/4.embed&#34;&gt;&lt;/iframe&gt;
-
-&lt;p&gt;Well, we&amp;rsquo;re still beating the market by about 30%. So can we really just let the experts do it for us? Well maybe use their lists as preliminary screener only.&lt;/p&gt;
 </description>
     </item>
     
