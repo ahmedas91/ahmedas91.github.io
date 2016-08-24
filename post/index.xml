@@ -210,20 +210,20 @@ iplot({
     
     <item>
       <title>Kaggle Animal Shelter Competition</title>
-      <link>http://ahmedas91.github.io/blog/2016/06/25/kaggle-animal-shelter-competition/</link>
-      <pubDate>Sat, 25 Jun 2016 20:55:56 +0300</pubDate>
+      <link>http://ahmedas91.github.io/blog/2016/06/11/kaggle-animal-shelter-competition/</link>
+      <pubDate>Sat, 11 Jun 2016 20:55:56 +0300</pubDate>
       
-      <guid>http://ahmedas91.github.io/blog/2016/06/25/kaggle-animal-shelter-competition/</guid>
+      <guid>http://ahmedas91.github.io/blog/2016/06/11/kaggle-animal-shelter-competition/</guid>
       <description>&lt;iframe src=&#34;http://nbviewer.jupyter.org/gist/ahmedas91/5699f914a158bf23402d8f7cd53b3571&#34; width=&#34;1000&#34; height=&#34;6800&#34;&gt;&lt;/iframe&gt; 
 </description>
     </item>
     
     <item>
-      <title>Using Logistic Regression, Gaussian Naive Bayes and Random Forests to Classify Students&#39; Success Rate</title>
-      <link>http://ahmedas91.github.io/blog/2016/04/09/using-logistic-regression-gaussian-naive-bayes-and-random-forests-to-classify-students-success-rate/</link>
+      <title>Classifying Student’s Success Rate Based on Three Machine Learning Models </title>
+      <link>http://ahmedas91.github.io/blog/2016/04/09/classifying-students-success-rate-based-on-three-machine-learning-models/</link>
       <pubDate>Sat, 09 Apr 2016 20:55:56 +0300</pubDate>
       
-      <guid>http://ahmedas91.github.io/blog/2016/04/09/using-logistic-regression-gaussian-naive-bayes-and-random-forests-to-classify-students-success-rate/</guid>
+      <guid>http://ahmedas91.github.io/blog/2016/04/09/classifying-students-success-rate-based-on-three-machine-learning-models/</guid>
       <description>&lt;iframe src=&#34;http://nbviewer.jupyter.org/gist/ahmedas91/0cc0b278292d1494bbe9e41d95560682&#34; width=&#34;1000&#34; height=&#34;9000&#34;&gt;&lt;/iframe&gt; 
 </description>
     </item>
