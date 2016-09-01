@@ -6,8 +6,18 @@
     <description>Recent content on Ahmad Mohammad</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 01 Jul 2016 20:55:56 +0300</lastBuildDate>
+    <lastBuildDate>Thu, 28 Jul 2016 20:55:56 +0300</lastBuildDate>
     <atom:link href="http://ahmedas91.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Comparing Online Portfolio Selection Algorithms</title>
+      <link>http://ahmedas91.github.io/blog/2016/07/28/comparing-online-portfolio-selection-algorithms/</link>
+      <pubDate>Thu, 28 Jul 2016 20:55:56 +0300</pubDate>
+      
+      <guid>http://ahmedas91.github.io/blog/2016/07/28/comparing-online-portfolio-selection-algorithms/</guid>
+      <description>&lt;iframe src=&#34;http://nbviewer.jupyter.org/gist/ahmedas91/4a5514b558d243940d12da39cdde3871&#34; width=&#34;1000&#34; height=&#34;5000&#34;&gt;&lt;/iframe&gt; 
+</description>
+    </item>
     
     <item>
       <title>Predicting US Equities Trends Using Random Forests</title>
@@ -98,9 +108,9 @@ $$recall=\frac { tp }{ tp+fn } $$&lt;/p&gt;
 &lt;p&gt;A growth company is any firm whose business generates significant positive cash flows or earnings, which increase at significantly faster rates than the overall economy.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;So how can we spot those kind of companies? We can screan stocks based on annual earning growth, revenues growth, return on equity&amp;hellip;etc. We can also look for companies developing disruptive technologies. But could we just let the experts do it for us? for free? Well this is what I am exploring in this post.&lt;/p&gt;
+&lt;p&gt;So how can we spot those kind of companies? We can screen stocks based on annual earning growth, revenues growth, return on equity&amp;hellip;etc. We can also look for companies developing disruptive technologies. But could we just let the experts do it for us? for free? Well this is what I am exploring in this post.&lt;/p&gt;
 
-&lt;p&gt;Each year, a bunch of news sites and organizations publish lists of the most innovative companies. In this post, I aggregated those lists from the sites and compared the holding period return for the listed companies from 2012 to 2015. Not all companies in the lists were included. Only those with that are listed on either NASDAQ, NYSE and AMEX, and Trading in the stock market during the whole holding period. You can download the aggregated list from the &lt;a href=&#34;https://github.com/ahmedas91/Hunting_growth_stocks&#34;&gt;repo&lt;/a&gt; on github. The data are collected from the below soursec. Note that for Forves list, I could not find the whole list for 2012, only the top ten.&lt;/p&gt;
+&lt;p&gt;Each year, a bunch of news sites and organizations publish lists of the most innovative companies. In this post, I aggregated those lists from the sites and compared the holding period return for the listed companies from 2012 to 2015. Not all companies in the lists were included. Only those with that are listed on either NASDAQ, NYSE and AMEX, and Trading in the stock market during the whole holding period. You can download the aggregated list from the &lt;a href=&#34;https://github.com/ahmedas91/Hunting_growth_stocks&#34;&gt;repo&lt;/a&gt; on github. The data are collected from the below sources. Note that for Forbes list, I could not find the whole list for 2012, only the top ten.&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;http://www.forbes.com/sites/samanthasharf/2012/09/05/the-ten-most-innovative-companies-in-america/#3f28c5aa23d3&#34;&gt;Forbes&lt;/a&gt;&lt;/li&gt;
@@ -114,12 +124,13 @@ $$recall=\frac { tp }{ tp+fn } $$&lt;/p&gt;
 
 &lt;h2 id=&#34;loading-the-data:41fdf1a60fa155412b6923f1b832c365&#34;&gt;loading the data&lt;/h2&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# first we import the required libraries
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# import the required libraries
 import pandas as pd
 import pandas_datareader.data as web
 import datetime
-import matplotlib.pyplot as plt
-%matplotlib inline  
+from plotly.offline import download_plotlyjs, init_notebook_mode, iplot
+import cufflinks as cf
+init_notebook_mode()
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# Load the aggregated list of companies
@@ -127,84 +138,47 @@ data = pd.read_csv(&amp;quot;TOP_COMP_2012.csv&amp;quot;)
 start = datetime.datetime(2013, 1, 1)
 end = datetime.datetime(2015, 12, 31)
 tickers = list(data[&#39;ticker&#39;])
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# importing the stock prices from yahoo finance
-ls_key = &#39;Adj Close&#39;
-f = web.DataReader(tickers, &#39;yahoo&#39;,start,end)
-cleanData = f.ix[ls_key]
-stock_data = pd.DataFrame(cleanData)
+# importing the stock prices
+stock_data = web.DataReader(tickers, &#39;yahoo&#39;,start,end)[&#39;Adj Close&#39;]
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;h2 id=&#34;results:41fdf1a60fa155412b6923f1b832c365&#34;&gt;Results&lt;/h2&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# Calulating the holding period returns 
-returns = (stock_data.iloc[-1]/stock_data.iloc[0] - 1)
-returns = pd.DataFrame(returns)
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# Calculating the holding period returns (HPR)
+returns = pd.DataFrame(stock_data.iloc[-1]/stock_data.iloc[0] - 1)
 returns = returns.sort_values(by = [0], ascending=False)
-returns[&#39;ticker&#39;] = list(returns.index)
-returns.columns = [&#39;HPR&#39;,&#39;ticker&#39;]
+returns.columns = [&#39;HPR&#39;]
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;#Average return
-avg_return = returns[&#39;HPR&#39;].mean(axis=0)*100
-# percentage of positive returns
-percentage_positive = len(returns[returns[&#39;HPR&#39;]&amp;gt;0])/float(len(returns))*100 
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;returns.iplot(kind=&#39;bar&#39;,title=&#39;Holding Period Returns&#39;, dimensions=(900,400))
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import plotly.graph_objs as go
-from plotly.offline import download_plotlyjs, init_notebook_mode, iplot
-init_notebook_mode()
-iplot({
-&amp;quot;data&amp;quot;: [
-    go.Bar(
-        x=returns[&#39;ticker&#39;],
-        y=returns[&#39;HPR&#39;]
-    )
-        ],
-&#39;layout&#39;: go.Layout(yaxis=go.YAxis(title=&#39;Holding Period Return&#39;, tickformat=&#39;%&#39;), 
-                    autosize=False,
-                    width=850,
-                    height=600)
-    })
+&lt;iframe width=&#34;950&#34; height=&#34;450&#34; frameborder=&#34;0&#34; scrolling=&#34;no&#34; src=&#34;https://plot.ly/~ahmedas91/24.embed&#34;&gt;&lt;/iframe&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;print &#39;Average return: &#39; + str(returns[&#39;HPR&#39;].mean(axis=0)*100)
+print &#39;Percentage of stocks with positive returns: &#39; + str(len(returns[returns[&#39;HPR&#39;]&amp;gt;0])/float(len(returns))*100 )
+
+# prints
+# Average return: 65.9479896729
+$ Percentage of stocks with positive returns: 87.2093023256
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;iframe width=&#34;950&#34; height=&#34;450&#34; frameborder=&#34;0&#34; scrolling=&#34;no&#34; src=&#34;https://plot.ly/~ahmedas91/0.embed&#34;&gt;&lt;/iframe&gt;
+&lt;p&gt;The above chart shows an astonishing results with an average return of 66%. Around 87% of the companies showed a positive holding period return. So can we conclude that we can just rely on the experts for hunting big growth companies? Let&amp;rsquo;s not get our hopes up yet. Let&amp;rsquo;s first check if we just invested in the S&amp;amp;P 500 and compare its cumulative returns with a but and hold portfolio of equal weights of the stocks above.&lt;/p&gt;
 
-&lt;p&gt;The above chart shows an astonishing results with an average return of 66%. Around 87% of the companies showed a positive holding period return. So can we conclude that we can just rely on the experts for hunting big growth companies? Let&amp;rsquo;s not get our hopes up yet. Let&amp;rsquo;s first check if we just invested in the S&amp;amp;P 500 and compare its cumulative returns with a portfolio of equal weights of the stocks above.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-pyhon&#34;&gt;# Importing the s&amp;amp;p price index
-ff = web.DataReader(&amp;quot;^GSPC&amp;quot;, &#39;yahoo&#39;,start,end)
-s_p = pd.DataFrame(ff[&#39;Adj Close&#39;])
-
-# calculating the daily cumulative returns during the period
-sp = pd.DataFrame([0])
-portfolio = pd.DataFrame([0])
-for i in range(1,len(stock_data)):
-    sp_returns = (s_p.iloc[i]/s_p.iloc[0] - 1)[0]
-    portfolio_returns = (stock_data.iloc[i]/stock_data.iloc[0] - 1).mean(axis=0)
-    sp = sp.append([sp_returns])
-    portfolio = portfolio.append([portfolio_returns])    
-cum_returns = pd.concat([portfolio, sp], axis=1)
-cum_returns.columns = [&#39;Portfolio&#39;,&#39;S&amp;amp;P&#39;]
-cum_returns = cum_returns.set_index(stock_data.index)
-
-iplot({
-&#39;data&#39;:[
-    go.Scatter(
-            x = cum_returns.index,
-            y = cum_returns[col],
-            name = col) for col in cum_returns.columns],
-&#39;layout&#39;: go.Layout(yaxis=go.YAxis(title=&#39;Holding Period Return&#39;, tickformat=&#39;%&#39;), 
-            autosize=False,
-            width=950,
-            height=600)
-})
+&lt;pre&gt;&lt;code class=&#34;language-pyhon&#34;&gt;s_p = pd.DataFrame(web.DataReader(&amp;quot;^GSPC&amp;quot;, &#39;yahoo&#39;,start,end)[&#39;Adj Close&#39;])
+s_p_returns = ((s_p/s_p.iloc[0,:])-1)
+cum_returns = pd.concat([pd.DataFrame(((stock_data/stock_data.iloc[0,:])-1).mean(axis=1)), 
+                         s_p_returns],
+                        axis=1)
+cum_returns.columns = [&#39;Buy and Hold&#39;, &#39;S&amp;amp;P&#39;]  
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;iframe width=&#34;950&#34; height=&#34;450&#34; frameborder=&#34;0&#34; scrolling=&#34;no&#34; src=&#34;https://plot.ly/~ahmedas91/4.embed&#34;&gt;&lt;/iframe&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;(cum_returns*100).iplot(dimensions=(900, 400), layout={&#39;yaxis&#39;: {&#39;ticksuffix&#39;:&#39;%&#39;}})
+&lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Well, we&amp;rsquo;re still beating the market by about 30%. So can we really just let the experts do it for us? Maybe use their lists as preliminary screener only.&lt;/p&gt;
+&lt;iframe width=&#34;950&#34; height=&#34;450&#34; frameborder=&#34;0&#34; scrolling=&#34;no&#34; src=&#34;https://plot.ly/~ahmedas91/30.embed&#34;&gt;&lt;/iframe&gt;
+
+&lt;p&gt;Well, we&amp;rsquo;re still beating the market by about 30%. So can we really just let the experts do it for us? Well maybe use their lists as preliminary screener only. In a later post, we will explore further portfolio strategies other than the buy and hold one and see whether we can beat it.&lt;/p&gt;
 </description>
     </item>
     
