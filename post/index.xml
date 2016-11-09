@@ -6,8 +6,18 @@
     <description>Recent content in Posts on Ahmad Mohammad</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 Jul 2016 20:55:56 +0300</lastBuildDate>
+    <lastBuildDate>Fri, 04 Nov 2016 20:55:56 +0300</lastBuildDate>
     <atom:link href="http://ahmedas91.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Explorating Uber rides data</title>
+      <link>http://ahmedas91.github.io/blog/2016/11/04/explorating-uber-rides-data/</link>
+      <pubDate>Fri, 04 Nov 2016 20:55:56 +0300</pubDate>
+      
+      <guid>http://ahmedas91.github.io/blog/2016/11/04/explorating-uber-rides-data/</guid>
+      <description>&lt;iframe src=&#34;http://nbviewer.jupyter.org/gist/ahmedas91/d653c954fe8b3bb1c298b46251a186d8&#34; width=&#34;1000&#34; height=&#34;3000&#34;&gt;&lt;/iframe&gt; 
+</description>
+    </item>
     
     <item>
       <title>Comparing Online Portfolio Selection Algorithms</title>
@@ -37,7 +47,7 @@
 
 &lt;p&gt;I chose 8 of the top companies in the S&amp;amp;P 500 in terms of market cap: AAP, BRK-B, GE, JNJ, MSFT, T, VZ, XOM.&lt;/p&gt;
 
-&lt;iframe width=&#34;950&#34; height=&#34;400&#34; frameborder=&#34;0&#34; scrolling=&#34;no&#34; src=&#34;https://plot.ly/~ahmedas91/19.embed&#34;&gt;&lt;/iframe&gt;
+&lt;iframe width=&#34;950&#34; height=&#34;450&#34; frameborder=&#34;0&#34; scrolling=&#34;no&#34; src=&#34;https://plot.ly/~ahmedas91/19.embed&#34;&gt;&lt;/iframe&gt;
 
 &lt;p&gt;The data sets for all the stocks are from May 5th, 1998 to May 4th, 2015 with total of 4277 days (the figure above shows a higher range).  Since we have 8 stocks and we are going to predict the price movement from 1 to 20 days ahead, we will have a total of 160 data sets to train and evaluate. But before proceeding with training the data, we had to check weather the data are balanced. The figure below shows the percentage of positive returns instances for each day and for each stock. Fortunately, the data does not need to be balanced since they are almost evenly split for all the stocks.&lt;/p&gt;
 
@@ -88,7 +98,7 @@ $$recall=\frac { tp }{ tp+fn } $$&lt;/p&gt;
 &lt;li&gt;&lt;p&gt;Oshiro, Thais Mayumi, Pedro Santoro Perez, and José Augusto Baranauskas. &amp;ldquo;How Many Trees in a Random Forest?&amp;rdquo; Machine Learning and Data Mining in Pattern Recognition Lecture Notes in Computer Science (2012): 154-68. Web.&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;Code to produce all the results above below:&lt;/p&gt;
+&lt;p&gt;Code to produce all the results above:&lt;/p&gt;
 
 &lt;iframe src=&#34;http://nbviewer.jupyter.org/gist/ahmedas91/9dca6aa31911bede1c8242ea861bd4f3&#34; width=&#34;1000&#34; height=&#34;6750&#34;&gt;&lt;/iframe&gt; 
 </description>
