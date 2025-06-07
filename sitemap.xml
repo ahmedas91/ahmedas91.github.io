@@ -1,59 +1,59 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://ahmedas91.github.io/</loc>
+    <loc>https://ahmedas91.github.io/</loc>
     <lastmod>2016-11-04T20:55:56+03:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://ahmedas91.github.io/blog/2016/11/04/explorating-uber-rides-data/</loc>
+    <loc>https://ahmedas91.github.io/blog/2016/11/04/explorating-uber-rides-data/</loc>
     <lastmod>2016-11-04T20:55:56+03:00</lastmod>
   </url>
   
   <url>
-    <loc>http://ahmedas91.github.io/blog/2016/07/28/comparing-online-portfolio-selection-algorithms/</loc>
+    <loc>https://ahmedas91.github.io/blog/2016/07/28/comparing-online-portfolio-selection-algorithms/</loc>
     <lastmod>2016-07-28T20:55:56+03:00</lastmod>
   </url>
   
   <url>
-    <loc>http://ahmedas91.github.io/blog/2016/07/01/predicting-us-equities-trends-using-random-forests/</loc>
+    <loc>https://ahmedas91.github.io/blog/2016/07/01/predicting-us-equities-trends-using-random-forests/</loc>
     <lastmod>2016-07-01T20:55:56+03:00</lastmod>
   </url>
   
   <url>
-    <loc>http://ahmedas91.github.io/blog/2016/06/26/hunting-down-growth-stocks/</loc>
+    <loc>https://ahmedas91.github.io/blog/2016/06/26/hunting-down-growth-stocks/</loc>
     <lastmod>2016-06-26T20:55:56+03:00</lastmod>
   </url>
   
   <url>
-    <loc>http://ahmedas91.github.io/blog/2016/06/11/kaggle-animal-shelter-competition/</loc>
+    <loc>https://ahmedas91.github.io/blog/2016/06/11/kaggle-animal-shelter-competition/</loc>
     <lastmod>2016-06-11T20:55:56+03:00</lastmod>
   </url>
   
   <url>
-    <loc>http://ahmedas91.github.io/blog/2016/04/09/classifying-students-success-rate-based-on-three-machine-learning-models/</loc>
+    <loc>https://ahmedas91.github.io/blog/2016/04/09/classifying-students-success-rate-based-on-three-machine-learning-models/</loc>
     <lastmod>2016-04-09T20:55:56+03:00</lastmod>
   </url>
   
   <url>
-    <loc>http://ahmedas91.github.io/about/</loc>
+    <loc>https://ahmedas91.github.io/about/</loc>
     <lastmod>2016-04-05T20:55:56+03:00</lastmod>
   </url>
   
   <url>
-    <loc>http://ahmedas91.github.io/blog/2016/03/01/efficient-frontier-with-python/</loc>
+    <loc>https://ahmedas91.github.io/blog/2016/03/01/efficient-frontier-with-python/</loc>
     <lastmod>2016-03-01T20:55:56+03:00</lastmod>
   </url>
   
   <url>
-    <loc>http://ahmedas91.github.io/blog/2016/02/20/model-evaluation-and-validation-using-boston-housing-prices/</loc>
+    <loc>https://ahmedas91.github.io/blog/2016/02/20/model-evaluation-and-validation-using-boston-housing-prices/</loc>
     <lastmod>2016-02-20T20:55:56+03:00</lastmod>
   </url>
   
   <url>
-    <loc>http://ahmedas91.github.io/blog/2016/01/05/kaggle-digits-recognition/</loc>
+    <loc>https://ahmedas91.github.io/blog/2016/01/05/kaggle-digits-recognition/</loc>
     <lastmod>2016-01-05T20:55:56+03:00</lastmod>
   </url>
   

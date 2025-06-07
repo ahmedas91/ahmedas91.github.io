@@ -1,40 +1,40 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="https://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Ahmad Mohammad</title>
-    <link>http://ahmedas91.github.io/post/</link>
+    <link>https://ahmedas91.github.io/post/</link>
     <description>Recent content in Posts on Ahmad Mohammad</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 04 Nov 2016 20:55:56 +0300</lastBuildDate>
-    <atom:link href="http://ahmedas91.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://ahmedas91.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Explorating Uber rides data</title>
-      <link>http://ahmedas91.github.io/blog/2016/11/04/explorating-uber-rides-data/</link>
+      <link>https://ahmedas91.github.io/blog/2016/11/04/explorating-uber-rides-data/</link>
       <pubDate>Fri, 04 Nov 2016 20:55:56 +0300</pubDate>
       
-      <guid>http://ahmedas91.github.io/blog/2016/11/04/explorating-uber-rides-data/</guid>
-      <description>&lt;iframe src=&#34;http://nbviewer.jupyter.org/gist/ahmedas91/d653c954fe8b3bb1c298b46251a186d8&#34; width=&#34;1000&#34; height=&#34;3000&#34;&gt;&lt;/iframe&gt; 
+      <guid>https://ahmedas91.github.io/blog/2016/11/04/explorating-uber-rides-data/</guid>
+      <description>&lt;iframe src=&#34;https://nbviewer.jupyter.org/gist/ahmedas91/d653c954fe8b3bb1c298b46251a186d8&#34; width=&#34;1000&#34; height=&#34;3000&#34;&gt;&lt;/iframe&gt; 
 </description>
     </item>
     
     <item>
       <title>Comparing Online Portfolio Selection Algorithms</title>
-      <link>http://ahmedas91.github.io/blog/2016/07/28/comparing-online-portfolio-selection-algorithms/</link>
+      <link>https://ahmedas91.github.io/blog/2016/07/28/comparing-online-portfolio-selection-algorithms/</link>
       <pubDate>Thu, 28 Jul 2016 20:55:56 +0300</pubDate>
       
-      <guid>http://ahmedas91.github.io/blog/2016/07/28/comparing-online-portfolio-selection-algorithms/</guid>
-      <description>&lt;iframe src=&#34;http://nbviewer.jupyter.org/gist/ahmedas91/b6303c8210a2307e6c731849cea06169&#34; width=&#34;1000&#34; height=&#34;5000&#34;&gt;&lt;/iframe&gt; 
+      <guid>https://ahmedas91.github.io/blog/2016/07/28/comparing-online-portfolio-selection-algorithms/</guid>
+      <description>&lt;iframe src=&#34;https://nbviewer.jupyter.org/gist/ahmedas91/b6303c8210a2307e6c731849cea06169&#34; width=&#34;1000&#34; height=&#34;5000&#34;&gt;&lt;/iframe&gt; 
 </description>
     </item>
     
     <item>
       <title>Predicting US Equities Trends Using Random Forests</title>
-      <link>http://ahmedas91.github.io/blog/2016/07/01/predicting-us-equities-trends-using-random-forests/</link>
+      <link>https://ahmedas91.github.io/blog/2016/07/01/predicting-us-equities-trends-using-random-forests/</link>
       <pubDate>Fri, 01 Jul 2016 20:55:56 +0300</pubDate>
       
-      <guid>http://ahmedas91.github.io/blog/2016/07/01/predicting-us-equities-trends-using-random-forests/</guid>
+      <guid>https://ahmedas91.github.io/blog/2016/07/01/predicting-us-equities-trends-using-random-forests/</guid>
       <description>
 
 &lt;h3 id=&#34;introduction:541041d1d76d4cc48b7fd4c33ed48b7e&#34;&gt;Introduction&lt;/h3&gt;
@@ -58,7 +58,7 @@
 
 &lt;figure &gt;
     
-        &lt;img src=&#34;http://ahmedas91.github.io/images/rf_table.png&#34; /&gt;
+        &lt;img src=&#34;https://ahmedas91.github.io/images/rf_table.png&#34; /&gt;
     
     
 &lt;/figure&gt;
@@ -100,19 +100,19 @@ $$recall=\frac { tp }{ tp+fn } $$&lt;/p&gt;
 
 &lt;p&gt;Code to produce all the results above:&lt;/p&gt;
 
-&lt;iframe src=&#34;http://nbviewer.jupyter.org/gist/ahmedas91/9dca6aa31911bede1c8242ea861bd4f3&#34; width=&#34;1000&#34; height=&#34;6750&#34;&gt;&lt;/iframe&gt; 
+&lt;iframe src=&#34;https://nbviewer.jupyter.org/gist/ahmedas91/9dca6aa31911bede1c8242ea861bd4f3&#34; width=&#34;1000&#34; height=&#34;6750&#34;&gt;&lt;/iframe&gt; 
 </description>
     </item>
     
     <item>
       <title>Hunting Down Growth Stocks</title>
-      <link>http://ahmedas91.github.io/blog/2016/06/26/hunting-down-growth-stocks/</link>
+      <link>https://ahmedas91.github.io/blog/2016/06/26/hunting-down-growth-stocks/</link>
       <pubDate>Sun, 26 Jun 2016 20:55:56 +0300</pubDate>
       
-      <guid>http://ahmedas91.github.io/blog/2016/06/26/hunting-down-growth-stocks/</guid>
+      <guid>https://ahmedas91.github.io/blog/2016/06/26/hunting-down-growth-stocks/</guid>
       <description>
 
-&lt;p&gt;Growth companies are those with huge potential returns and are often found in the technology sector. Here is the official definition from &lt;a href=&#34;http://www.investopedia.com/terms/g/growthcompany.asp&#34;&gt;investing.com&lt;/a&gt;:&lt;/p&gt;
+&lt;p&gt;Growth companies are those with huge potential returns and are often found in the technology sector. Here is the official definition from &lt;a href=&#34;https://www.investopedia.com/terms/g/growthcompany.asp&#34;&gt;investing.com&lt;/a&gt;:&lt;/p&gt;
 
 &lt;blockquote&gt;
 &lt;p&gt;A growth company is any firm whose business generates significant positive cash flows or earnings, which increase at significantly faster rates than the overall economy.&lt;/p&gt;
@@ -123,13 +123,13 @@ $$recall=\frac { tp }{ tp+fn } $$&lt;/p&gt;
 &lt;p&gt;Each year, a bunch of news sites and organizations publish lists of the most innovative companies. In this post, I aggregated those lists from the sites and compared the holding period return for the listed companies from 2012 to 2015. Not all companies in the lists were included. Only those with that are listed on either NASDAQ, NYSE and AMEX, and Trading in the stock market during the whole holding period. You can download the aggregated list from the &lt;a href=&#34;https://github.com/ahmedas91/Hunting_growth_stocks&#34;&gt;repo&lt;/a&gt; on github. The data are collected from the below sources. Note that for Forbes list, I could not find the whole list for 2012, only the top ten.&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.forbes.com/sites/samanthasharf/2012/09/05/the-ten-most-innovative-companies-in-america/#3f28c5aa23d3&#34;&gt;Forbes&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.businessinsider.com/presenting-the-39-companies-that-will-win-through-innovation-2012-4?op=1&#34;&gt;Barclays&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://top100innovators.stateofinnovation.thomsonreuters.com/&#34;&gt;Thomson Reuters&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.strategyand.pwc.com/global/home/what-we-think/innovation1000/top-innovators-spenders#/tab-2012&#34;&gt;PWC&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://www2.technologyreview.com/tr50/2012/?_ga=1.224498527.453581319.1458158445&#34;&gt;MIT&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.forbes.com/sites/samanthasharf/2012/09/05/the-ten-most-innovative-companies-in-america/#3f28c5aa23d3&#34;&gt;Forbes&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.businessinsider.com/presenting-the-39-companies-that-will-win-through-innovation-2012-4?op=1&#34;&gt;Barclays&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://top100innovators.stateofinnovation.thomsonreuters.com/&#34;&gt;Thomson Reuters&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.strategyand.pwc.com/global/home/what-we-think/innovation1000/top-innovators-spenders#/tab-2012&#34;&gt;PWC&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www2.technologyreview.com/tr50/2012/?_ga=1.224498527.453581319.1458158445&#34;&gt;MIT&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://www.bcgperspectives.com/content/interactive/innovation_growth_most_innovative_companies_interactive_guide/&#34;&gt;BCG&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.fastcompany.com/section/most-innovative-companies-2012&#34;&gt;Fast Company&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.fastcompany.com/section/most-innovative-companies-2012&#34;&gt;Fast Company&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id=&#34;loading-the-data:41fdf1a60fa155412b6923f1b832c365&#34;&gt;loading the data&lt;/h2&gt;
@@ -194,31 +194,31 @@ cum_returns.columns = [&#39;Buy and Hold&#39;, &#39;S&amp;amp;P&#39;]
     
     <item>
       <title>Kaggle Animal Shelter Competition</title>
-      <link>http://ahmedas91.github.io/blog/2016/06/11/kaggle-animal-shelter-competition/</link>
+      <link>https://ahmedas91.github.io/blog/2016/06/11/kaggle-animal-shelter-competition/</link>
       <pubDate>Sat, 11 Jun 2016 20:55:56 +0300</pubDate>
       
-      <guid>http://ahmedas91.github.io/blog/2016/06/11/kaggle-animal-shelter-competition/</guid>
-      <description>&lt;iframe src=&#34;http://nbviewer.jupyter.org/gist/ahmedas91/5699f914a158bf23402d8f7cd53b3571&#34; width=&#34;1000&#34; height=&#34;6800&#34;&gt;&lt;/iframe&gt; 
+      <guid>https://ahmedas91.github.io/blog/2016/06/11/kaggle-animal-shelter-competition/</guid>
+      <description>&lt;iframe src=&#34;https://nbviewer.jupyter.org/gist/ahmedas91/5699f914a158bf23402d8f7cd53b3571&#34; width=&#34;1000&#34; height=&#34;6800&#34;&gt;&lt;/iframe&gt; 
 </description>
     </item>
     
     <item>
       <title>Classifying Student’s Success Rate Based on Three Machine Learning Models </title>
-      <link>http://ahmedas91.github.io/blog/2016/04/09/classifying-students-success-rate-based-on-three-machine-learning-models/</link>
+      <link>https://ahmedas91.github.io/blog/2016/04/09/classifying-students-success-rate-based-on-three-machine-learning-models/</link>
       <pubDate>Sat, 09 Apr 2016 20:55:56 +0300</pubDate>
       
-      <guid>http://ahmedas91.github.io/blog/2016/04/09/classifying-students-success-rate-based-on-three-machine-learning-models/</guid>
-      <description>&lt;iframe src=&#34;http://nbviewer.jupyter.org/gist/ahmedas91/0cc0b278292d1494bbe9e41d95560682&#34; width=&#34;1000&#34; height=&#34;9000&#34;&gt;&lt;/iframe&gt; 
+      <guid>https://ahmedas91.github.io/blog/2016/04/09/classifying-students-success-rate-based-on-three-machine-learning-models/</guid>
+      <description>&lt;iframe src=&#34;https://nbviewer.jupyter.org/gist/ahmedas91/0cc0b278292d1494bbe9e41d95560682&#34; width=&#34;1000&#34; height=&#34;9000&#34;&gt;&lt;/iframe&gt; 
 </description>
     </item>
     
     <item>
       <title>Efficient Frontier with Python</title>
-      <link>http://ahmedas91.github.io/blog/2016/03/01/efficient-frontier-with-python/</link>
+      <link>https://ahmedas91.github.io/blog/2016/03/01/efficient-frontier-with-python/</link>
       <pubDate>Tue, 01 Mar 2016 20:55:56 +0300</pubDate>
       
-      <guid>http://ahmedas91.github.io/blog/2016/03/01/efficient-frontier-with-python/</guid>
-      <description>&lt;p&gt;In a previous post, we naively selected growth companies and constructed a uniform-weigh portfolio out of them. In this post, we are going to use the same list of companies to construct a minimum-vaiance portfolios based on Harry Markowitz&amp;rsquo;s &lt;a href=&#34;http://www.efalken.com/LowVolClassics/markowitz_JF1952.pdf&#34;&gt;&amp;lsquo;Portfolio Selection&amp;rsquo; paper&lt;/a&gt; published 1952. Portfolio theory in a nutshell is finding the optimal wights that maximizes the return given a level of risk (variance or standard deviation) or the other way around, minimize the risk given an expected return. We are only going to need some matrix algebra and quadratic programming to explain the mathematics behind the theory. Dr. Eric Zivot&amp;rsquo;s &lt;a href=&#34;http://faculty.washington.edu/ezivot/econ424/portfolioTheoryMatrix.pdf&#34;&gt;notes&lt;/a&gt; provides a great detailed explanation using matrix algebra and most below is taken from his notes.&lt;/p&gt;
+      <guid>https://ahmedas91.github.io/blog/2016/03/01/efficient-frontier-with-python/</guid>
+      <description>&lt;p&gt;In a previous post, we naively selected growth companies and constructed a uniform-weigh portfolio out of them. In this post, we are going to use the same list of companies to construct a minimum-vaiance portfolios based on Harry Markowitz&amp;rsquo;s &lt;a href=&#34;https://www.efalken.com/LowVolClassics/markowitz_JF1952.pdf&#34;&gt;&amp;lsquo;Portfolio Selection&amp;rsquo; paper&lt;/a&gt; published 1952. Portfolio theory in a nutshell is finding the optimal wights that maximizes the return given a level of risk (variance or standard deviation) or the other way around, minimize the risk given an expected return. We are only going to need some matrix algebra and quadratic programming to explain the mathematics behind the theory. Dr. Eric Zivot&amp;rsquo;s &lt;a href=&#34;https://faculty.washington.edu/ezivot/econ424/portfolioTheoryMatrix.pdf&#34;&gt;notes&lt;/a&gt; provides a great detailed explanation using matrix algebra and most below is taken from his notes.&lt;/p&gt;
 
 &lt;p&gt;Let&amp;rsquo;s say we have N companies and $x$ is a vector of initial random weighs for the portfolio, &lt;code&gt;$\mu$&lt;/code&gt; is a vector of the average returns and &lt;code&gt;${\sigma  }^{ 2 } $&lt;/code&gt; is an &lt;code&gt;$N\times N$&lt;/code&gt; covariance matrix where:&lt;/p&gt;
 
@@ -238,7 +238,7 @@ cum_returns.columns = [&#39;Buy and Hold&#39;, &#39;S&amp;amp;P&#39;]
 
 &lt;div&gt;$$\underset { x }{ max } \quad R =x&#39;{ \mu  }\quad s.t.\quad \Sigma =x&#39;{ \Sigma  }_{ required }x\quad and\quad x&#39;1=1$$&lt;/div&gt;
 
-&lt;p&gt;Solving either of them will give a portfolio that&amp;rsquo;s on the efficient frontier which is, according to &lt;a href=&#34;http://www.investopedia.com/terms/e/efficientfrontier.asp&#34;&gt;investopedia&lt;/a&gt; explanation, a set of optimal portfolios that offers the highest expected return for a defined level of risk or the lowest risk for a given level of expected return. And here is where we&amp;rsquo;re going to start working on python (repo on &lt;a href=&#34;https://github.com/ahmedas91/efficient_frontier&#34;&gt;github&lt;/a&gt;). We&amp;rsquo;re going to draw all the possible portfolios that satisfies the conditions above. The examples &lt;a href=&#34;https://plot.ly/ipython-notebooks/markowitz-portfolio-optimization/&#34;&gt;here&lt;/a&gt; and &lt;a href=&#34;https://wellecks.wordpress.com/2014/03/23/portfolio-optimization-with-python/&#34;&gt;here&lt;/a&gt; helped me a lot writing the code. Actually, they provides better explanation of the codes than me. The hardest part was trying to solve the optimization problem using &lt;code&gt;cvxopt&lt;/code&gt; library.&lt;/p&gt;
+&lt;p&gt;Solving either of them will give a portfolio that&amp;rsquo;s on the efficient frontier which is, according to &lt;a href=&#34;https://www.investopedia.com/terms/e/efficientfrontier.asp&#34;&gt;investopedia&lt;/a&gt; explanation, a set of optimal portfolios that offers the highest expected return for a defined level of risk or the lowest risk for a given level of expected return. And here is where we&amp;rsquo;re going to start working on python (repo on &lt;a href=&#34;https://github.com/ahmedas91/efficient_frontier&#34;&gt;github&lt;/a&gt;). We&amp;rsquo;re going to draw all the possible portfolios that satisfies the conditions above. The examples &lt;a href=&#34;https://plot.ly/ipython-notebooks/markowitz-portfolio-optimization/&#34;&gt;here&lt;/a&gt; and &lt;a href=&#34;https://wellecks.wordpress.com/2014/03/23/portfolio-optimization-with-python/&#34;&gt;here&lt;/a&gt; helped me a lot writing the code. Actually, they provides better explanation of the codes than me. The hardest part was trying to solve the optimization problem using &lt;code&gt;cvxopt&lt;/code&gt; library.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;#import required libraries
 import pandas as pd
@@ -387,9 +387,9 @@ def frontier(monthly_returns):
 &lt;p&gt;References:&lt;/p&gt;
 
 &lt;ol&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://www.efalken.com/LowVolClassics/markowitz_JF1952.pdf&#34;&gt;http://www.efalken.com/LowVolClassics/markowitz_JF1952.pdf&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://www.efalken.com/LowVolClassics/markowitz_JF1952.pdf&#34;&gt;https://www.efalken.com/LowVolClassics/markowitz_JF1952.pdf&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://faculty.washington.edu/ezivot/econ424/portfolioTheoryMatrix.pdf&#34;&gt;http://faculty.washington.edu/ezivot/econ424/portfolioTheoryMatrix.pdf&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://faculty.washington.edu/ezivot/econ424/portfolioTheoryMatrix.pdf&#34;&gt;https://faculty.washington.edu/ezivot/econ424/portfolioTheoryMatrix.pdf&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 
 &lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://plot.ly/ipython-notebooks/markowitz-portfolio-optimization/&#34;&gt;https://plot.ly/ipython-notebooks/markowitz-portfolio-optimization/&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 
@@ -400,20 +400,20 @@ def frontier(monthly_returns):
     
     <item>
       <title>Model Evaluation and Validation Using Boston Housing prices</title>
-      <link>http://ahmedas91.github.io/blog/2016/02/20/model-evaluation-and-validation-using-boston-housing-prices/</link>
+      <link>https://ahmedas91.github.io/blog/2016/02/20/model-evaluation-and-validation-using-boston-housing-prices/</link>
       <pubDate>Sat, 20 Feb 2016 20:55:56 +0300</pubDate>
       
-      <guid>http://ahmedas91.github.io/blog/2016/02/20/model-evaluation-and-validation-using-boston-housing-prices/</guid>
+      <guid>https://ahmedas91.github.io/blog/2016/02/20/model-evaluation-and-validation-using-boston-housing-prices/</guid>
       <description>&lt;iframe src=&#34;https://nbviewer.jupyter.org/gist/ahmedas91/f93dc91562c06549f5890924d50d7c61&#34; width=&#34;1000&#34; height=&#34;6800&#34;&gt;&lt;/iframe&gt; 
 </description>
     </item>
     
     <item>
       <title>Kaggle Digits Recognition</title>
-      <link>http://ahmedas91.github.io/blog/2016/01/05/kaggle-digits-recognition/</link>
+      <link>https://ahmedas91.github.io/blog/2016/01/05/kaggle-digits-recognition/</link>
       <pubDate>Tue, 05 Jan 2016 20:55:56 +0300</pubDate>
       
-      <guid>http://ahmedas91.github.io/blog/2016/01/05/kaggle-digits-recognition/</guid>
+      <guid>https://ahmedas91.github.io/blog/2016/01/05/kaggle-digits-recognition/</guid>
       <description>
 
 &lt;p&gt;On my test post, we&amp;rsquo;ll solve  Kaggle&amp;rsquo;s &lt;a href=&#34;https://www.kaggle.com/c/digit-recognizer&#34;&gt;Digit Recognizer&lt;/a&gt; competition using python&amp;rsquo;s machine learning library &lt;code&gt;sklearn&lt;/code&gt;. It a really simple problem and used as a starting point (along with the &lt;a href=&#34;https://www.kaggle.com/c/titanic&#34;&gt;Titanic&lt;/a&gt; one) Kaggle competitions.&lt;/p&gt;
@@ -447,7 +447,7 @@ display(5)
 
 &lt;figure &gt;
     
-        &lt;img src=&#34;http://ahmedas91.github.io/images/digits.png&#34; /&gt;
+        &lt;img src=&#34;https://ahmedas91.github.io/images/digits.png&#34; /&gt;
     
     
 &lt;/figure&gt;
